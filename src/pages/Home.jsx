@@ -1,29 +1,16 @@
-import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import HeroCinematic from '../components/HeroCinematic.jsx';
 import FramedImage from '../components/FramedImage.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import ProductRail from '../components/ProductRail.jsx';
 import GiftBoxCard from '../components/GiftBoxCard.jsx';
 import Reveal from '../components/Reveal.jsx';
 import CorporateForm from '../components/CorporateForm.jsx';
-import { Emblem } from '../components/Logo.jsx';
 import { ArrowRight, CheckIcon, InstagramIcon } from '../components/Icons.jsx';
 import { boutiqueGallery, boutiqueStory, craft, instagramGallery, site } from '../data/site.js';
 import { bestsellerIds, giftBoxes, products } from '../data/products.js';
 
 export default function Home() {
-  const heroRef = useRef(null);
-
-  /* The "light-follows-the-mouse" glow: a warm pool of light tracks the cursor
-     across the dark entrance panel, like the LED strips moving over marble. */
-  const trackPointer = (event) => {
-    const panel = heroRef.current;
-    if (!panel) return;
-    const rect = panel.getBoundingClientRect();
-    panel.style.setProperty('--mx', `${((event.clientX - rect.left) / rect.width) * 100}%`);
-    panel.style.setProperty('--my', `${((event.clientY - rect.top) / rect.height) * 100}%`);
-  };
-
   const signature = products.filter((product) => product.featured);
   const bestsellers = bestsellerIds
     .map((id) => products.find((product) => product.id === id))
@@ -31,53 +18,8 @@ export default function Home() {
 
   return (
     <>
-      {/* --- 1. Hero ------------------------------------------------------- */}
-      <section className="hero">
-        <div className="hero__grid">
-          <div className="hero__panel" ref={heroRef} onPointerMove={trackPointer}>
-            <span className="hero__spotlight" aria-hidden="true" />
-            <div className="hero__inner">
-              <Emblem className="brand__emblem" />
-              <h1 className="hero__title" style={{ marginTop: '1.1rem' }}>
-                Anahita
-              </h1>
-              <span className="hero__descriptor">Fine Chocolates</span>
-              <p className="hero__tagline">“{site.tagline}”</p>
-              <p className="hero__lede">{site.heroIntro}</p>
-              <div className="hero__actions">
-                <Link to="/chocolates" className="btn btn--gold">
-                  Explore our chocolates
-                </Link>
-                <Link to="/boutique" className="btn">
-                  Discover our boutique
-                </Link>
-              </div>
-              <div className="hero__assurances">
-                <span>Handmade in small batches</span>
-                <span>Packed in the boutique</span>
-                <span>Personalised gifts</span>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="hero__media"
-            style={{ '--focus': '52% 46%', '--zoom': 1.02 }}
-          >
-            <img
-              src="/images/boutique-interior.jpg"
-              alt="The ANAHITA boutique: a curved glass counter filled with handmade chocolates under warm amber lighting, with gift boxes on illuminated shelves behind"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-            />
-            <div className="hero__caption">
-              <span>The chocolate counter</span>
-              <span>ANAHITA · Fine Chocolates</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* --- 1. Cinematic scroll-driven hero -------------------------------- */}
+      <HeroCinematic />
 
       {/* --- 2. Brand statement -------------------------------------------- */}
       <section className="section section--espresso">

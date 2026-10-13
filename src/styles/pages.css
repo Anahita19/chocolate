@@ -3,56 +3,184 @@
    detail, gift atelier, checkout, legal.
    --------------------------------------------------------------------------- */
 
-/* --- hero ---------------------------------------------------------------- */
-.hero {
+/* --- cinematic scroll-scrubbed hero -------------------------------------- */
+/* The section is deliberately tall: its height is the scroll distance the
+   pinned film travels over. `height` is set from SCROLL_TRAVEL in
+   HeroCinematic.jsx, which uses the same distance to map scroll to the film. */
+.chero {
   position: relative;
   background: var(--basalt);
-  overflow: hidden;
-  padding-top: clamp(4.5rem, 9vw, 6rem);
 }
 
-.hero__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-}
-
-@media (min-width: 1020px) {
-  .hero__grid {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    align-items: stretch;
-    min-height: 100svh;
-  }
-}
-
-.hero__panel {
+.chero__sticky {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: clamp(1.35rem, 2.4vw, 2rem);
-  padding: clamp(2.5rem, 5vw, 3.5rem) var(--gutter) clamp(3rem, 6vw, 4.5rem);
-  background:
-    radial-gradient(90% 70% at 20% 10%, rgba(197, 162, 103, 0.1), transparent 60%),
-    linear-gradient(180deg, #1c1310, var(--basalt) 70%);
-  border-right: 1px solid var(--gold-hair);
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--basalt);
 }
 
-@media (min-width: 1020px) {
-  .hero__panel {
-    padding-inline: clamp(2rem, 5vw, 4.5rem);
-  }
+/* The pinned viewport: the film holds still while the tall section scrolls past,
+   then releases naturally into the next section. */
+.chero--cinematic .chero__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }
 
-.hero__spotlight {
+.chero__poster,
+.chero__video {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Shown until a first film frame is decoded — and permanently if the film cannot
+   be loaded, so the entrance is never blank. */
+.chero__poster {
+  object-position: 52% 46%;
+}
+
+/* The film is portrait: on a wide viewport the crop keeps the centre of the frame,
+   where the counter and the chocolates are, rather than the top or the floor. */
+.chero__video {
+  object-position: 50% 50%;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease);
+}
+
+.chero--ready .chero__video {
+  opacity: 1;
+}
+
+/* A scrim, not a blackout: the film stays the dominant element, the top of the
+   frame keeps the fixed navigation legible, and the lower band carries the
+   wordmark and the controls. */
+.chero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+      180deg,
+      rgba(20, 14, 11, 0.52) 0%,
+      rgba(20, 14, 11, 0.06) 24%,
+      rgba(20, 14, 11, 0.12) 54%,
+      rgba(20, 14, 11, 0.74) 100%
+    ),
+    linear-gradient(94deg, rgba(20, 14, 11, 0.5) 0%, rgba(20, 14, 11, 0.08) 48%, transparent 74%);
+}
+
+.chero__content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  padding: clamp(4.5rem, 9vw, 6rem) var(--gutter) clamp(2.5rem, 5vw, 3.5rem);
+  /* The copy leaves as the camera starts moving — `--p` is the scroll progress. */
+  opacity: clamp(0, calc(1 - var(--p, 0) * 2.4), 1);
+  transform: translateY(calc(var(--p, 0) * -42px));
+}
+
+.chero__cue {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(234, 224, 210, 0.62);
+}
+
+.chero__cue-rule {
+  width: 3.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-soft), transparent);
+}
+
+/* Discreet loading state: the boutique photograph shows through it, the wordmark
+   and a slow gold hairline mark the wait, and it lifts as soon as a first frame
+   can be displayed. */
+.chero__loading {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: rgba(26, 18, 15, 0.62);
+  color: var(--cream);
+  transition: opacity 0.9s var(--ease);
+}
+
+.chero__loading--done {
+  opacity: 0;
   pointer-events: none;
-  background: radial-gradient(
-    380px 380px at var(--mx, 42%) var(--my, 38%),
-    rgba(217, 164, 94, 0.12),
-    transparent 68%
-  );
-  transition: background 0.4s linear;
+}
+
+.chero__loading-word {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-transform: uppercase;
+}
+
+.chero__loading-rule {
+  width: clamp(6rem, 16vw, 9rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-soft) 50%, transparent);
+  background-size: 220% 100%;
+  animation: chero-sweep 2.4s var(--ease) infinite;
+}
+
+.chero__loading-note {
+  font-size: 0.62rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--text-quiet);
+}
+
+@keyframes chero-sweep {
+  from {
+    background-position: 160% 0;
+  }
+  to {
+    background-position: -60% 0;
+  }
+}
+
+/* Short viewports: tighten the entrance so the whole block still fits above the
+   fold instead of sliding under the navigation. */
+@media (max-height: 720px) {
+  .chero__content {
+    gap: clamp(0.85rem, 2vw, 1.15rem);
+    padding-bottom: clamp(1.5rem, 4vw, 2.25rem);
+  }
+  .chero .hero__title {
+    font-size: clamp(2.3rem, 8vw, 3.4rem);
+  }
+  .chero .hero__tagline {
+    margin-top: 0.85rem;
+    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  }
+  .chero .hero__lede {
+    margin-top: 0.7rem;
+    font-size: 0.92rem;
+  }
+  .chero .hero__actions {
+    margin-top: 1rem;
+  }
+  .chero .hero__assurances {
+    margin-top: 1.1rem;
+    padding-top: 1rem;
+  }
 }
 
 .hero__inner {
@@ -122,77 +250,6 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-quiet);
-}
-
-.hero__media {
-  position: relative;
-  min-height: 58svh;
-  overflow: hidden;
-}
-
-/* Phones lead with the boutique photograph, so the first screen is warm light
-   and glass before the wordmark; the scrim blends into the text panel below. */
-@media (max-width: 1019px) {
-  .hero {
-    padding-top: 0;
-  }
-  .hero__media {
-    order: -1;
-    min-height: 44svh;
-  }
-}
-
-@media (min-width: 1020px) {
-  .hero__media {
-    min-height: 100%;
-  }
-}
-
-.hero__media img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: var(--focus, 50% 45%);
-  transform: scale(var(--zoom, 1));
-  transform-origin: var(--focus, 50% 45%);
-}
-
-.hero__media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-      180deg,
-      rgba(26, 18, 15, 0.55) 0%,
-      rgba(26, 18, 15, 0.05) 32%,
-      rgba(26, 18, 15, 0.55) 88%,
-      var(--basalt) 100%
-    ),
-    linear-gradient(90deg, rgba(26, 18, 15, 0.75), transparent 42%);
-}
-
-@media (min-width: 1020px) {
-  .hero__media::after {
-    background: linear-gradient(90deg, rgba(26, 18, 15, 0.72), transparent 38%),
-      linear-gradient(180deg, rgba(26, 18, 15, 0.35), transparent 26%, rgba(26, 18, 15, 0.45));
-  }
-}
-
-.hero__caption {
-  position: absolute;
-  z-index: 3;
-  left: var(--gutter);
-  bottom: 1.5rem;
-  right: var(--gutter);
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(234, 224, 210, 0.6);
 }
 
 /* --- editorial intro ----------------------------------------------------- */
