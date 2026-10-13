@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ANAHITA emblem">
+  <rect width="64" height="64" fill="#1A120F"/>
+  <g stroke="#C5A267" fill="none" stroke-width="2.2" stroke-linecap="round">
+    <path d="M32 14c5.5 7 8 13.5 8 19.5S36 44 32 44"/>
+    <path d="M32 44c-5.5-2-9-6-10.5-11.5S20.5 22 24.5 18"/>
+    <path d="M32 44c5.5-2 9-6 10.5-11.5S43.5 22 39.5 18"/>
+  </g>
+  <circle cx="32" cy="46" r="2.4" fill="#C5A267"/>
+</svg>

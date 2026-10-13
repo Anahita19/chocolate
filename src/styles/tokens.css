@@ -1,0 +1,49 @@
+/* ---------------------------------------------------------------------------
+   ANAHITA — design tokens.
+   Derived directly from the boutique interior: dark walnut cabinetry, black-brown
+   marble, champagne-gold trim and warm amber shelf lighting.
+   --------------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --basalt: #1a120f;
+  --espresso: #241713;
+  --walnut: #2a1c17;
+  --walnut-deep: #493126;
+  --marble: #15110f;
+  --ivory: #f7f0e6;
+  --cream: #eae0d2;
+  --ink: #2a1c17;
+  --ink-soft: #4e3a2f;
+
+  /* Accents */
+  --gold: #c5a267;
+  --gold-bright: #d4b57e;
+  --amber: #d9a45e;
+  --gold-hair: rgba(197, 162, 103, 0.26);
+  --gold-soft: rgba(197, 162, 103, 0.5);
+
+  /* Text */
+  --text-dark: #f8f1e8;
+  --text-muted: rgba(234, 224, 210, 0.7);
+  --text-quiet: rgba(234, 224, 210, 0.5);
+  --text-ink-muted: rgba(42, 28, 23, 0.68);
+
+  /* Type */
+  --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --sans: 'Montserrat', -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --label-size: 0.8125rem;
+  --label-track: 0.18em;
+
+  /* Layout */
+  --shell: 1240px;
+  --shell-narrow: 880px;
+  --gutter: clamp(1.15rem, 4vw, 3.25rem);
+  --section: clamp(4.5rem, 9vw, 8.5rem);
+
+  /* Motion & elevation */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --lift: 0 30px 70px -34px rgba(0, 0, 0, 0.9);
+  --glow: 0 0 40px -12px rgba(217, 164, 94, 0.45);
+  --bevel: inset 0 0 0 1px rgba(197, 162, 103, 0.16);
+  --radius: 2px;
+}
