@@ -1,13 +1,27 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import BoxBuilder from '../components/BoxBuilder.jsx';
 import FramedImage from '../components/FramedImage.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import Reveal from '../components/Reveal.jsx';
 import NotFound from './NotFound.jsx';
 import { useCart } from '../lib/cart.jsx';
-import { formatToman, toPersianDigits } from '../lib/format.js';
+import { formatToman, pieceCount, toPersianDigits } from '../lib/format.js';
 import { categories, findProduct, products } from '../data/products.js';
 import { ChevronLeft, ChevronRight, CloseIcon, MinusIcon, PlusIcon, ZoomIcon } from '../components/Icons.jsx';
+
+/* ---------------------------------------------------------------------------
+   The product page.
+
+   The photographs on one side (cursor-following zoom, thumbnails, lightbox) and
+   a reading card on the other: price and controls first, then the tasting
+   profile as a pull-quote, the maker's note, and the whole specification as
+   cards. Every line comes from `products.js` — nothing is written here.
+
+   Boxed chocolates then hand over to the box builder below, where the customer
+   fills the box with the chocolate they actually want. Bars are not pieces, so
+   they go straight to the related shelf instead.
+   --------------------------------------------------------------------------- */
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -46,6 +60,18 @@ export default function ProductDetail() {
   const gallery = product.gallery?.length ? product.gallery : [product.image];
   const categoryLabel = categories.find((option) => option.id === product.category)?.label;
 
+  /* The box builder needs a box (the piece count comes from `boxSize`) and the
+     boutique's own chocolates to fill it with: bars and the ready-made whole-box
+     assortment are not single pieces. */
+  const capacity = pieceCount(product.boxSize);
+  const buildable = product.category !== 'bars' && capacity >= 6;
+  const boxPieces = buildable
+    ? products.filter(
+        (item) =>
+          item.id !== product.id && item.category !== 'bars' && item.category !== 'assortments',
+      )
+    : [];
+
   /* Hover zoom: the focal point follows the cursor across the frame. */
   const onStageMove = (event) => {
     const stage = stageRef.current;
@@ -67,12 +93,15 @@ export default function ProductDetail() {
           <nav className="breadcrumb" aria-label="مسیر صفحه">
             <Link to="/">خانه</Link>
             <span aria-hidden="true">/</span>
-            <Link to="/chocolates">شکلاتها</Link>
+            <Link to="/chocolates">شکلات‌ها</Link>
             <span aria-hidden="true">/</span>
             <span>{product.name}</span>
           </nav>
           <span className="eyebrow">{categoryLabel}</span>
           <h1 style={{ fontSize: 'clamp(2.1rem, 4.6vw, 3.4rem)' }}>{product.name}</h1>
+          <p className="lede" style={{ marginTop: '1.1rem', maxWidth: '52ch' }}>
+            {product.short}
+          </p>
         </div>
       </section>
 
@@ -92,11 +121,11 @@ export default function ProductDetail() {
                   setLightbox(true);
                 }
               }}
-              aria-label="باز کردن تصویر در اندازهی بزرگ"
+              aria-label="باز کردن تصویر در اندازه‌ی بزرگ"
             >
               <FramedImage
                 image={gallery[active]}
-                alt={`${product.name} — ${active === 0 ? 'عکاسیشده در بوتیک آناهیتا' : 'نمای بوتیک'}`}
+                alt={`${product.name} — ${active === 0 ? 'عکاسی‌شده در بوتیک آناهیتا' : 'نمای بوتیک'}`}
                 ratio="frame--square"
                 eager
                 className="pdp__frame"
@@ -125,14 +154,19 @@ export default function ProductDetail() {
                 </button>
               ))}
             </div>
+
+            <p className="pdp__caption">
+              پرداخت با دست، چیده‌شده روی سینی عاجی‌رنگ و عکاسی‌شده در بوتیک آناهیتا.
+            </p>
           </div>
 
           <div className="pdp__info">
-            <p className="lede" style={{ margin: 0 }}>{product.short}</p>
-            <div className="pdp__price">{formatToman(product.price)}</div>
-            <span className="pdp__weight">
-              {product.weight} · {product.boxSize}
-            </span>
+            <div className="pdp__price-row">
+              <span className="pdp__price">{formatToman(product.price)}</span>
+              <span className="pdp__meta">
+                {product.weight} · {product.boxSize}
+              </span>
+            </div>
 
             <div className="pdp__buy">
               <span className="stepper-step">
@@ -152,62 +186,68 @@ export default function ProductDetail() {
               <button type="button" className="btn btn--ink" onClick={() => addProduct(product, qty)}>
                 افزودن به سبد · {formatToman(product.price * qty)}
               </button>
-              <Link to="/personalise" className="link-arrow">
-                شخصیسازی یک هدیه
-              </Link>
             </div>
 
+            {buildable ? (
+              <Link to="#build-box" className="pdp__aside">
+                <span className="pdp__aside-title">جعبه را خودت بچین</span>
+                <span className="pdp__aside-copy">
+                  {toPersianDigits(capacity)} جای خالی؛ هر کدام را با شکلاتی که دوست دارید پر کنید.
+                </span>
+              </Link>
+            ) : (
+              <Link to="/personalise" className="pdp__aside">
+                <span className="pdp__aside-title">شخصی‌سازی یک هدیه</span>
+                <span className="pdp__aside-copy">
+                  در آتلیه‌ی هدیه، جعبه، روبان و پیام دست‌نویس را خودتان انتخاب کنید.
+                </span>
+              </Link>
+            )}
+
+            <figure className="pdp__quote">
+              <span className="eyebrow">پروفایل طعم</span>
+              <blockquote>{product.flavour}</blockquote>
+            </figure>
+
             <div className="pdp__block">
-              <h3>توضیحات</h3>
+              <h3>درباره‌ی این جعبه</h3>
               <p style={{ margin: 0 }}>{product.description}</p>
             </div>
 
-            <div className="pdp__block">
-              <h3>پروفایل طعم</h3>
-              <p style={{ margin: 0 }}>{product.flavour}</p>
-            </div>
-
-            <div className="pdp__block">
-              <h3>مواد اولیه و آلرژنها</h3>
-              <ul className="spec-list">
-                <li>
-                  <span>مواد اولیه</span>
-                  <span>{product.ingredients}</span>
-                </li>
-                <li>
-                  <span>آلرژنها</span>
-                  <span>{product.allergens}</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="pdp__block">
-              <h3>جزئیات</h3>
-              <ul className="spec-list">
-                <li>
-                  <span>اندازهی جعبه</span>
-                  <span>{product.boxSize}</span>
-                </li>
-                <li>
-                  <span>وزن</span>
-                  <span>{product.weight}</span>
-                </li>
-                <li>
-                  <span>نگهداری</span>
-                  <span>{product.storage}</span>
-                </li>
-              </ul>
+            <div className="pdp__specs">
+              <div className="spec-card">
+                <span className="spec-card__label">اندازه‌ی جعبه</span>
+                <span className="spec-card__value">{product.boxSize}</span>
+              </div>
+              <div className="spec-card">
+                <span className="spec-card__label">وزن</span>
+                <span className="spec-card__value">{product.weight}</span>
+              </div>
+              <div className="spec-card spec-card--wide">
+                <span className="spec-card__label">نگهداری</span>
+                <span className="spec-card__value">{product.storage}</span>
+              </div>
+              <div className="spec-card spec-card--wide">
+                <span className="spec-card__label">مواد اولیه</span>
+                <span className="spec-card__value">{product.ingredients}</span>
+              </div>
+              <div className="spec-card spec-card--wide">
+                <span className="spec-card__label">آلرژن‌ها</span>
+                <span className="spec-card__value">{product.allergens}</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      {buildable && <BoxBuilder product={product} pieces={boxPieces} capacity={capacity} />}
 
       <section className="section section--dark">
         <div className="shell">
           <div className="section-head">
             <div>
               <span className="eyebrow">از همان قفسه</span>
-              <h2 className="section-head__title">اینها را هم دوست دارید</h2>
+              <h2 className="section-head__title">این‌ها را هم دوست دارید</h2>
             </div>
           </div>
           <div className="grid grid--4">

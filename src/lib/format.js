@@ -19,6 +19,17 @@ export function formatCount(value) {
   return Number(value) || 0;
 }
 
+const PERSIAN_TO_LATIN = { '۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4', '۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9' };
+
+/** «۱۲ پرالین» → 12. Reads the piece count out of a box description, so the box
+ *  builder knows how many slots a box has. Returns 0 when the text carries no
+ *  figure at all. */
+export function pieceCount(text) {
+  const latin = String(text ?? '').replace(/[۰-۹]/g, (digit) => PERSIAN_TO_LATIN[digit]);
+  const match = latin.match(/\d+/);
+  return match ? Number(match[0]) : 0;
+}
+
 /** Current year in the Persian calendar, e.g. «۱۴۰۵». */
 export function persianYear(date = new Date()) {
   return new Intl.DateTimeFormat('fa-IR', { year: 'numeric' }).format(date);

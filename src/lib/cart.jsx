@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { site } from '../data/site.js';
 import { giftPrice, giftSummary } from '../data/gifting.js';
+import { toPersianDigits } from './format.js';
 
 const STORAGE_KEY = 'anahita.cart.v1';
 
@@ -101,7 +102,36 @@ export function CartProvider({ children }) {
         },
         qty,
       );
-      setNotice('هدیهی شخصیسازیشدهی شما به سبد اضافه شد');
+      setNotice('هدیه‌ی شخصی‌سازی‌شده‌ی شما به سبد اضافه شد');
+      setOpen(true);
+    },
+    [addItem],
+  );
+
+  /* «جعبه را خودت بچین» — the customer's own arrangement of a box. The price is
+     the box's own price (the boutique prices the box, not the piece), and the
+     arrangement travels with the order as the line's composition. Two different
+     arrangements of the same box are two separate lines. */
+  const addBuiltBox = useCallback(
+    (product, pieces, qty = 1) => {
+      const composition = pieces
+        .map((piece) => `${piece.name} × ${toPersianDigits(piece.count)}`)
+        .join(' · ');
+      const signature = pieces.map((piece) => `${piece.id}-${piece.count}`).join('|');
+      addItem(
+        {
+          key: `built:${product.id}:${signature}`,
+          kind: 'product',
+          id: product.id,
+          slug: product.slug,
+          name: `${product.name} — چیده‌شده توسط شما`,
+          price: product.price,
+          weight: composition,
+          image: product.image,
+        },
+        qty,
+      );
+      setNotice('جعبه‌ی چیده‌شده‌ی شما به سبد اضافه شد');
       setOpen(true);
     },
     [addItem],
@@ -149,6 +179,7 @@ export function CartProvider({ children }) {
       addProduct,
       addGiftBox,
       addPersonalised,
+      addBuiltBox,
       setQty,
       removeItem,
       clear,
@@ -165,6 +196,7 @@ export function CartProvider({ children }) {
       addProduct,
       addGiftBox,
       addPersonalised,
+      addBuiltBox,
       setQty,
       removeItem,
       clear,

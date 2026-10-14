@@ -50,6 +50,9 @@ if `anahita-website-design` is ever merged properly.
 | The entrance hero (film, wordmark, controls, scroll logic) | `src/components/Hero.jsx` |
 | The hero photograph, and every other boutique framing | `public/images/` |
 | The hero film, served untouched | `public/videos/anahita-hero.mp4` |
+| The product page (photographs, price card, spec cards) | `src/pages/ProductDetail.jsx` |
+| The box the customer fills themselves | `src/components/BoxBuilder.jsx` |
+| How a filled box reaches the bag | `addBuiltBox` in `src/lib/cart.jsx` |
 
 **Boutique details are deliberately empty** (`addressLines`, `hours`, `phone`, `email`,
 `instagramUrl`). The UI renders an elegant "to be confirmed" state instead of inventing
@@ -106,6 +109,29 @@ on top of `object-fit: cover` (see `src/components/FramedImage.jsx`).
   keyframes) is the fix for both; swap the file and nothing else needs to change.
 - Scroll length is one number to taste: `--chero-scroll` in `src/styles/pages.css`.
 
+## The product page and «جعبه را خودت بچین»
+
+- `src/pages/ProductDetail.jsx` is two columns: the photographs (cursor-following zoom,
+  thumbnails, lightbox) and a reading card — price and controls, a `.pdp__aside` card that
+  leads to the builder, the tasting profile as a pull-quote, the maker's note, and `.spec-card`
+  panels. Every string comes from `products.js`; nothing is written in the component. The card
+  is no longer `position: sticky` — it is taller than the viewport, and a pinned column that
+  long hides its own tail.
+- `src/components/BoxBuilder.jsx` fills the box on that page. Capacity is `pieceCount(boxSize)`
+  (`src/lib/format.js` reads the figure out of «۱۲ پرالین»), and the box is only offered when
+  the product is not a bar and holds at least six pieces. The pieces offered are the boutique's
+  own chocolates — `products` minus bars, minus the ready-made whole-box assortment, minus the
+  product itself.
+- **The price does not change with the arrangement.** The boutique prices the box, not the
+  piece, so the builder only fills slots; there is no per-piece price anywhere in the data and
+  none should be invented. If per-piece pricing is ever wanted, it needs a new field in
+  `products.js` and a new line in `addBuiltBox` — the component never touches money.
+- The bag line is an ordinary product line with its own key: `built:<id>:<compositions>`, name
+  suffixed «— چیده‌شده توسط شما», and the arrangement in `weight`, which the drawer, the
+  checkout payload and the order payload already carry. Two different arrangements of the same
+  box stay two lines. `OrderConfirmation` prints the name only; the composition is in the order
+  record but not on that page.
+
 ## Language and direction (Persian, RTL)
 
 - The site is Persian and right-to-left: `index.html` sets `lang="fa" dir="rtl"`.
@@ -151,6 +177,14 @@ Then drive the running app: add a chocolate to the bag from a product card, open
 drawer, use the gift atelier (`/personalise`, totals should change with each choice), and
 place a test order through `/checkout` — it must land on `/order-confirmation` with a
 reference and the bag emptied. Leave no test records in the cart afterwards.
+
+The box builder: on a boxed product page the `.pdp__aside` card leads to `#build-box`. The
+tray must hold exactly as many slots as `boxSize` says; a `+` fills one and tapping a filled
+slot in the tray gives it back; the count reads «n از total» in the tray and, below 980px,
+again beside the chocolate list; the add button stays disabled until the box is full. Adding
+it must open the drawer with a line named «… — چیده‌شده توسط شما», the arrangement (in Persian
+digits) as its meta line, and the product's own price — add a built box, then remove that one
+line and confirm the bag is back to what it was.
 
 The hero is the scroll-scrubbed film: check the homepage shows a `<video>` for
 `/videos/anahita-hero.mp4` at `data-state="ready"`, that it is `paused` and not `loop`ed at
