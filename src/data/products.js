@@ -45,6 +45,11 @@ const barBox = { src: BAR_BOX, focus: '50% 52%', zoom: 1 };
  *  context it is photographed in. */
 const gallery = (primary) => [primary, counter, giftWall, craftMacro];
 
+/* `price` is the price of the whole box. `piecePrice` is the price of one single
+   piece of that chocolate, in toman — the boutique sets it from its admin panel,
+   so it sits at 0 until then, and «جعبه را خودت بچین» adds it to the box's own
+   price (see `boxPricing` in `src/lib/pricing.js`). Bars and ready-made whole-box
+   assortments are not single pieces and carry no piece price. */
 const productList = [
   {
     id: 'p-pralines',
@@ -52,6 +57,7 @@ const productList = [
     name: 'پرالین شکلات دستساز',
     category: 'pralines',
     price: 1850000,
+    piecePrice: 0,
     weight: '۲۲۰ گرم · جعبه ۱۲ عددی',
     boxSize: '۱۲ پرالین',
     short: 'دوازده پرالین با مغزهای گاناش متفاوت، پرداختشده با دست.',
@@ -71,6 +77,7 @@ const productList = [
     name: 'ترافل شکلات دستساز',
     category: 'truffles',
     price: 1480000,
+    piecePrice: 0,
     weight: '۱۸۰ گرم · جعبه ۹ عددی',
     boxSize: '۹ ترافل',
     short: 'ترافلهای دستپیچ با قلبی از گاناش و پوششی نرم از پودر کاکائو.',
@@ -89,6 +96,7 @@ const productList = [
     name: 'مجموعه شکلات تلخ',
     category: 'dark',
     price: 2240000,
+    piecePrice: 0,
     weight: '۳۰۰ گرم · جعبه ۱۶ عددی',
     boxSize: '۱۶ قطعه',
     short: 'شانزده قطعهی تلخ، از ۶۰ درصد تا ۷۸ درصدِ تلخ و پرقدرت.',
@@ -107,6 +115,7 @@ const productList = [
     name: 'مجموعه شکلات شیری',
     category: 'milk',
     price: 2120000,
+    piecePrice: 0,
     weight: '۳۰۰ گرم · جعبه ۱۶ عددی',
     boxSize: '۱۶ قطعه',
     short: 'شکلات شیری نرم و گرد با مغزهای کارامل و فندق.',
@@ -125,6 +134,7 @@ const productList = [
     name: 'پرالین پسته',
     category: 'pistachio',
     price: 2350000,
+    piecePrice: 0,
     weight: '۲۴۰ گرم · جعبه ۱۲ عددی',
     boxSize: '۱۲ پرالین',
     short: 'پرالین پسته زیر شکلات شیری، با یک پستهی کامل روی آن.',
@@ -144,6 +154,7 @@ const productList = [
     name: 'شکلات فندقی',
     category: 'hazelnut',
     price: 1980000,
+    piecePrice: 0,
     weight: '۲۴۰ گرم · جعبه ۱۲ عددی',
     boxSize: '۱۲ قطعه',
     short: 'پرالین فندق بو داده در شکلات تلخ و شیری.',
@@ -202,6 +213,7 @@ const productList = [
     name: 'ترافل کارامل نمکی',
     category: 'truffles',
     price: 1620000,
+    piecePrice: 0,
     weight: '۱۸۰ گرم · جعبه ۹ عددی',
     boxSize: '۹ ترافل',
     short: 'مغز کارامل نرم در شکلات تلخ، با نمک دریا.',
@@ -219,6 +231,7 @@ const productList = [
     name: 'پرالین گل محمدی و هل',
     category: 'pralines',
     price: 1890000,
+    piecePrice: 0,
     weight: '۲۲۰ گرم · جعبه ۱۲ عددی',
     boxSize: '۱۲ پرالین',
     short: 'پرالینی معطر از گل محمدی و هل سبز.',
@@ -236,6 +249,7 @@ const productList = [
     name: 'شکلات تلخ پرتقال و دارچین',
     category: 'dark',
     price: 1540000,
+    piecePrice: 0,
     weight: '۱۶۰ گرم · جعبه ۸ عددی',
     boxSize: '۸ قطعه',
     short: 'پوست پرتقال شیرینشده و دارچین در شکلات تلخ.',
@@ -253,6 +267,7 @@ const productList = [
     name: 'شکلات سفید و پسته',
     category: 'pistachio',
     price: 1760000,
+    piecePrice: 0,
     weight: '۲۰۰ گرم · جعبه ۱۰ عددی',
     boxSize: '۱۰ قطعه',
     short: 'شکلات عاجیرنگ با پسته و رایحهای از گل محمدی.',

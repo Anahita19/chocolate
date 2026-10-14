@@ -122,10 +122,12 @@ on top of `object-fit: cover` (see `src/components/FramedImage.jsx`).
   the product is not a bar and holds at least six pieces. The pieces offered are the boutique's
   own chocolates — `products` minus bars, minus the ready-made whole-box assortment, minus the
   product itself.
-- **The price does not change with the arrangement.** The boutique prices the box, not the
-  piece, so the builder only fills slots; there is no per-piece price anywhere in the data and
-  none should be invented. If per-piece pricing is ever wanted, it needs a new field in
-  `products.js` and a new line in `addBuiltBox` — the component never touches money.
+- **The price is the box's own price plus the pieces that went into it.** Each chocolate carries
+  `piecePrice` — one single piece of it, in toman — in `products.js`; the boutique fills it in from
+  its admin panel, and until it does the value stays `0`, so a built box costs exactly its own
+  price. `boxPricing(product, pieces)` in `src/lib/pricing.js` returns `{ base, pieces, total }`
+  and is the only place that money is worked out: the builder prints it and `addBuiltBox` stores
+  `total` on the line. Never price a piece anywhere else, and never invent a price.
 - The bag line is an ordinary product line with its own key: `built:<id>:<compositions>`, name
   suffixed «— چیده‌شده توسط شما», and the arrangement in `weight`, which the drawer, the
   checkout payload and the order payload already carry. Two different arrangements of the same

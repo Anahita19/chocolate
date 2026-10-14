@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useCart } from '../lib/cart.jsx';
 import { formatToman, toPersianDigits } from '../lib/format.js';
+import { boxPricing } from '../lib/pricing.js';
 import { MinusIcon, PlusIcon, TrashIcon } from './Icons.jsx';
 
 /* ---------------------------------------------------------------------------
@@ -9,9 +10,10 @@ import { MinusIcon, PlusIcon, TrashIcon } from './Icons.jsx';
    The tray holds exactly as many pieces as the box does (`capacity`), and every
    one of them is a chocolate of this boutique (`pieces`). A piece goes in from
    the picker and comes back out with a tap on the tray, so nothing is ever
-   half-committed. The price is the box's own price whatever the arrangement —
-   the boutique prices the box, not the piece — and the arrangement travels with
-   the order as the line's composition (see `addBuiltBox` in `lib/cart.jsx`).
+   half-committed. The price is the box's own price plus every piece that went
+   into it (see `boxPricing` in `lib/pricing.js` — a piece with no price yet
+   simply adds nothing), and the arrangement travels with the order as the line's
+   composition (see `addBuiltBox` in `lib/cart.jsx`).
    --------------------------------------------------------------------------- */
 
 export default function BoxBuilder({ product, pieces, capacity }) {
@@ -22,13 +24,20 @@ export default function BoxBuilder({ product, pieces, capacity }) {
     () =>
       pieces
         .filter((piece) => counts[piece.id] > 0)
-        .map((piece) => ({ id: piece.id, name: piece.name, image: piece.image, count: counts[piece.id] })),
+        .map((piece) => ({
+          id: piece.id,
+          name: piece.name,
+          image: piece.image,
+          piecePrice: piece.piecePrice,
+          count: counts[piece.id],
+        })),
     [counts, pieces],
   );
 
   const filled = chosen.reduce((sum, piece) => sum + piece.count, 0);
   const remaining = capacity - filled;
   const full = remaining === 0;
+  const pricing = boxPricing(product, chosen);
 
   const addPiece = (piece) =>
     setCounts((current) => {
@@ -57,7 +66,7 @@ export default function BoxBuilder({ product, pieces, capacity }) {
           <p className="lede" style={{ maxWidth: '46ch' }}>
             {toPersianDigits(capacity)} جای خالی در این جعبه هست و پر کردنشان با شماست. از فهرست
             شکلات‌ها انتخاب کنید و اگر پشیمان شدید، روی همان قطعه در سینی بزنید تا برداشته شود. قیمت
-            جعبه با هر چیدمانی همان {formatToman(product.price)} است و همین چیدمان همراه سفارش به
+            جعبه پایه است و قیمت قطعه‌هایی که انتخاب می‌کنید روی آن حساب می‌شود؛ همین چیدمان همراه سفارش به
             بوتیک می‌رسد.
           </p>
         </div>
@@ -101,6 +110,21 @@ export default function BoxBuilder({ product, pieces, capacity }) {
               <div className="gift-progress__bar" style={{ width: `${(filled / capacity) * 100}%` }} />
             </div>
 
+            <div className="builder__price" aria-live="polite">
+              <span className="builder__price-line">
+                <span>قیمت جعبه</span>
+                <span>{formatToman(pricing.base)}</span>
+              </span>
+              <span className="builder__price-line">
+                <span>قطعه‌های انتخابی</span>
+                <span>{formatToman(pricing.pieces)}</span>
+              </span>
+              <span className="builder__price-line builder__price-line--total">
+                <span>جمع جعبه</span>
+                <span>{formatToman(pricing.total)}</span>
+              </span>
+            </div>
+
             <p className="builder__hint" aria-live="polite">
               {full
                 ? 'جعبه کامل شد؛ آماده‌ی افزودن به سبد است.'
@@ -123,7 +147,7 @@ export default function BoxBuilder({ product, pieces, capacity }) {
                 disabled={!full}
                 onClick={() => addBuiltBox(product, chosen)}
               >
-                افزودن جعبه‌ی چیده‌شده · {formatToman(product.price)}
+                افزودن جعبه‌ی چیده‌شده · {formatToman(pricing.total)}
               </button>
             </div>
           </div>

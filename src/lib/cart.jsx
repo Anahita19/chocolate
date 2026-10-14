@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { site } from '../data/site.js';
 import { giftPrice, giftSummary } from '../data/gifting.js';
 import { toPersianDigits } from './format.js';
+import { boxPricing } from './pricing.js';
 
 const STORAGE_KEY = 'anahita.cart.v1';
 
@@ -109,8 +110,9 @@ export function CartProvider({ children }) {
   );
 
   /* «جعبه را خودت بچین» — the customer's own arrangement of a box. The price is
-     the box's own price (the boutique prices the box, not the piece), and the
-     arrangement travels with the order as the line's composition. Two different
+     the box's own price plus the pieces that went into it (see `boxPricing`), the
+     figure the builder showed the customer, and the arrangement travels with the
+     order as the line's composition. Two different
      arrangements of the same box are two separate lines. */
   const addBuiltBox = useCallback(
     (product, pieces, qty = 1) => {
@@ -125,7 +127,7 @@ export function CartProvider({ children }) {
           id: product.id,
           slug: product.slug,
           name: `${product.name} — چیده‌شده توسط شما`,
-          price: product.price,
+          price: boxPricing(product, pieces).total,
           weight: composition,
           image: product.image,
         },
