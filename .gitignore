@@ -4,3 +4,5 @@ dist/
 .env.local
 .DS_Store
 *.log
+# source archive handed out from the preview, not part of the site
+public/*.zip
