@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import HeroCinematic from '../components/HeroCinematic.jsx';
+import Hero from '../components/Hero.jsx';
 import FramedImage from '../components/FramedImage.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import ProductRail from '../components/ProductRail.jsx';
@@ -18,8 +18,8 @@ export default function Home() {
 
   return (
     <>
-      {/* --- 1. Cinematic scroll-driven hero -------------------------------- */}
-      <HeroCinematic />
+      {/* --- 1. Entrance hero ------------------------------------------------ */}
+      <Hero />
 
       {/* --- 2. Brand statement -------------------------------------------- */}
       <section className="section section--espresso">

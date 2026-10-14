@@ -3,10 +3,10 @@
    detail, gift atelier, checkout, legal.
    --------------------------------------------------------------------------- */
 
-/* --- cinematic scroll-scrubbed hero -------------------------------------- */
-/* The section is deliberately tall: its height is the scroll distance the
-   pinned film travels over. `height` is set from SCROLL_TRAVEL in
-   HeroCinematic.jsx, which uses the same distance to map scroll to the film. */
+/* --- entrance hero ------------------------------------------------------- */
+/* One viewport of the boutique photograph (Hero.jsx), with the wordmark and the
+   controls over it. Nothing is pinned: the hero releases straight into the next
+   section. */
 .chero {
   position: relative;
   background: var(--basalt);
@@ -20,43 +20,19 @@
   background: var(--basalt);
 }
 
-/* The pinned viewport: the film holds still while the tall section scrolls past,
-   then releases naturally into the next section. */
-.chero--cinematic .chero__sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-}
-
-.chero__poster,
-.chero__video {
+.chero__poster {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-/* Shown until a first film frame is decoded — and permanently if the film cannot
-   be loaded, so the entrance is never blank. */
-.chero__poster {
+  /* The interior is portrait: on a wide viewport the crop keeps the counter and
+     the chocolates, rather than the ceiling or the floor. */
   object-position: 52% 46%;
 }
 
-/* The film is portrait: on a wide viewport the crop keeps the centre of the frame,
-   where the counter and the chocolates are, rather than the top or the floor. */
-.chero__video {
-  object-position: 50% 50%;
-  opacity: 0;
-  transition: opacity 1.2s var(--ease);
-}
-
-.chero--ready .chero__video {
-  opacity: 1;
-}
-
-/* A scrim, not a blackout: the film stays the dominant element, the top of the
-   frame keeps the fixed navigation legible, and the lower band carries the
+/* A scrim, not a blackout: the photograph stays the dominant element, the top of
+   the frame keeps the fixed navigation legible, and the lower band carries the
    wordmark and the controls. */
 .chero__scrim {
   position: absolute;
@@ -81,79 +57,6 @@
   justify-content: flex-end;
   gap: clamp(1.5rem, 3vw, 2.25rem);
   padding: clamp(4.5rem, 9vw, 6rem) var(--gutter) clamp(2.5rem, 5vw, 3.5rem);
-  /* The copy leaves as the camera starts moving — `--p` is the scroll progress. */
-  opacity: clamp(0, calc(1 - var(--p, 0) * 2.4), 1);
-  transform: translateY(calc(var(--p, 0) * -42px));
-}
-
-.chero__cue {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  font-size: 0.66rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(234, 224, 210, 0.62);
-}
-
-.chero__cue-rule {
-  width: 3.5rem;
-  height: 1px;
-  background: linear-gradient(90deg, var(--gold-soft), transparent);
-}
-
-/* Discreet loading state: the boutique photograph shows through it, the wordmark
-   and a slow gold hairline mark the wait, and it lifts as soon as a first frame
-   can be displayed. */
-.chero__loading {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  background: rgba(26, 18, 15, 0.62);
-  color: var(--cream);
-  transition: opacity 0.9s var(--ease);
-}
-
-.chero__loading--done {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.chero__loading-word {
-  font-family: var(--serif);
-  font-size: 1.15rem;
-  letter-spacing: 0.42em;
-  text-indent: 0.42em;
-  text-transform: uppercase;
-}
-
-.chero__loading-rule {
-  width: clamp(6rem, 16vw, 9rem);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-soft) 50%, transparent);
-  background-size: 220% 100%;
-  animation: chero-sweep 2.4s var(--ease) infinite;
-}
-
-.chero__loading-note {
-  font-size: 0.62rem;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--text-quiet);
-}
-
-@keyframes chero-sweep {
-  from {
-    background-position: 160% 0;
-  }
-  to {
-    background-position: -60% 0;
-  }
 }
 
 /* Short viewports: tighten the entrance so the whole block still fits above the

@@ -47,8 +47,8 @@ if `anahita-website-design` is ever merged properly.
 | Gift atelier options and price additions | `src/data/gifting.js` |
 | Colours, type, spacing tokens | `src/styles/tokens.css` |
 | Newsletter / enquiry / order / payment integration seam | `src/lib/integrations.js` |
-| Cinematic hero: scroll distance, loading state, fallbacks | `src/components/HeroCinematic.jsx` |
-| The hero film, and the still that stands in for it | `public/videos/`, `public/images/` |
+| The entrance hero (boutique photograph, wordmark, controls) | `src/components/Hero.jsx` |
+| The hero photograph, and every other boutique framing | `public/images/` |
 
 **Boutique details are deliberately empty** (`addressLines`, `hours`, `phone`, `email`,
 `instagramUrl`). The UI renders an elegant "to be confirmed" state instead of inventing
@@ -76,31 +76,15 @@ on top of `object-fit: cover` (see `src/components/FramedImage.jsx`).
 - Fonts are self-hosted variable WOFF2 files in `public/fonts/` (Cormorant Garamond,
   Montserrat) declared in `src/styles/fonts.css`; the app renders identically offline.
 
-## The cinematic hero (scroll-scrubbed film)
+## The entrance hero
 
-- `public/videos/anahita-hero.mp4` is a **re-encode** of the clip the boutique supplied:
-  H.264, 480×864 (portrait), 24 fps, 8 s, no audio, `+faststart`, and a keyframe every six
-  frames. The supplied original carried **one keyframe for the whole clip**, so every seek
-  decoded from the first frame — never put an un-rekeyframed export back in.
-  Re-encode (ffmpeg 4.4, no ffmpeg on the sandbox host — run it through docker):
-  ```bash
-  docker run --rm -v "$PWD":/w jrottenberg/ffmpeg:4.4-alpine -y -i /w/hero-source.mp4 \
-    -an -c:v libx264 -preset slow -crf 21 -pix_fmt yuv420p -profile:v high -level 4.0 \
-    -g 6 -keyint_min 6 -sc_threshold 0 -movflags +faststart /w/anahita-hero.mp4
-  ```
-- The film is **never played**. `HeroCinematic.jsx` only writes `video.currentTime`, from the
-  scroll position inside its tall section; the inner viewport is `position: sticky`. The
-  scroll handler records the target and a single `requestAnimationFrame` applies it, so
-  scrolling re-renders nothing. `SCROLL_TRAVEL` (the section height, in vh) and `HOLD` (the
-  slice of that travel resting on the final frame) live at the top of that file — keep the
-  inline `height` and the mapping distance in step.
-- The source is portrait, so on a wide desktop the `object-fit: cover` crop keeps the centre
-  of the frame. A 1080×1920 export of the same clip would be sharper on large screens.
-- Fallbacks share one branch, `scrubbing = false` → `chero--still`: `prefers-reduced-motion`,
-  a film that fails to load, or a decoder that will not seek all fall back to the boutique
-  photograph with the same headline, copy and CTAs and no pinned scroll section.
-- The copy fades as the camera starts moving (`--p`, the progress custom property) and stops
-  taking pointer events past the half-way point.
+- `src/components/Hero.jsx` renders one viewport of `public/images/boutique-interior.jpg`
+  with the wordmark, the tagline and the two controls over it (the `.chero` block in
+  `src/styles/pages.css`). Nothing is pinned and nothing is loaded: the section releases
+  straight into the next one.
+- The boutique's scroll-scrubbed film was **removed on request**. The clip, the `<video>`,
+  the seek/scroll logic, the scroll cue and the loading state are all gone, and
+  `public/videos/` no longer exists — putting a film back means restoring all of that.
 
 ## Language and direction (Persian, RTL)
 
@@ -148,9 +132,7 @@ drawer, use the gift atelier (`/personalise`, totals should change with each cho
 place a test order through `/checkout` — it must land on `/order-confirmation` with a
 reference and the bag emptied. Leave no test records in the cart afterwards.
 
-The hero needs a browser, and `html { scroll-behavior: smooth }` animates programmatic
-scrolls — poll for the frame instead of reading straight after `window.scrollTo`. Scroll
-the homepage and check that `video.paused` stays `true` throughout, that 25/50/75/100 % of
-the pin travel land on 25/50/75/100 % of the 8 s film (both directions), that stopping
-holds the frame, and that the section releases into the next one with no gap (the hero's
-bottom edge equals the next section's top edge).
+The hero is a plain full-viewport photograph now: check the homepage renders it, that the
+document contains no `<video>` element and makes no request under `/videos/`, and that the
+next section starts immediately after the hero (the hero's bottom edge equals the next
+section's top edge).
