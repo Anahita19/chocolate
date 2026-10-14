@@ -1,0 +1,252 @@
+/* ---------------------------------------------------------------------------
+   Base layer: resets, editorial typography, section rhythm, motion primitives.
+   --------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--basalt);
+  color: var(--text-dark);
+  font-family: var(--sans);
+  font-size: 1.0625rem; /* 17px minimum for legibility on dark surfaces */
+  line-height: 1.65;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--serif);
+  font-weight: 300;
+  line-height: 1.08;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: clamp(2.6rem, 6.4vw, 4.9rem);
+}
+h2 {
+  font-size: clamp(2rem, 4.2vw, 3.3rem);
+}
+h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+}
+
+p {
+  margin: 0 0 1.1em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* --- shared primitives ---------------------------------------------------- */
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section);
+  position: relative;
+}
+
+.section--dark {
+  background: var(--basalt);
+  color: var(--text-dark);
+}
+.section--espresso {
+  background: linear-gradient(180deg, var(--basalt), var(--espresso) 60%, var(--basalt));
+}
+.section--ivory {
+  background: var(--ivory);
+  color: var(--ink);
+}
+.section--cream {
+  background: var(--cream);
+  color: var(--ink);
+}
+.section--marble {
+  background:
+    radial-gradient(120% 90% at 78% 8%, rgba(217, 164, 94, 0.16), transparent 55%),
+    linear-gradient(160deg, #1d1512, #120d0b 70%);
+}
+
+.hairline {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(90deg, transparent, var(--gold-hair) 18%, var(--gold-hair) 82%, transparent);
+}
+
+.eyebrow {
+  font-family: var(--sans);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-track);
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.lede {
+  color: var(--text-muted);
+  max-width: 58ch;
+}
+
+.section--ivory .lede,
+.section--cream .lede {
+  color: var(--text-ink-muted);
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 3rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: clamp(2.25rem, 4vw, 3.5rem);
+}
+
+.section-head__title {
+  max-width: 22ch;
+}
+
+.section-head--center {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.section-head--center .section-head__title {
+  max-width: 30ch;
+}
+
+.rule-ornament {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: var(--gold);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-track);
+  text-transform: uppercase;
+}
+
+.rule-ornament::before,
+.rule-ornament::after {
+  content: '';
+  height: 1px;
+  width: clamp(28px, 6vw, 72px);
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translate(-50%, -160%);
+  z-index: 90;
+  background: var(--gold);
+  color: var(--ink);
+  padding: 0.6rem 1.2rem;
+  font-size: var(--label-size);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: transform 0.2s var(--ease);
+}
+
+.skip-link:focus {
+  transform: translate(-50%, 0);
+}
+
+/* --- scroll reveal -------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.texture-grain {
+  background-image:
+    radial-gradient(rgba(197, 162, 103, 0.06) 1px, transparent 1px),
+    radial-gradient(rgba(197, 162, 103, 0.04) 1px, transparent 1px);
+  background-position: 0 0, 12px 12px;
+  background-size: 24px 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
