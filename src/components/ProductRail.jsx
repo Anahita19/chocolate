@@ -3,8 +3,9 @@ import ProductCard from './ProductCard.jsx';
 import { ChevronLeft, ChevronRight } from './Icons.jsx';
 
 /* Horizontal product rail. Native scrolling gives touch gestures and swipe for
-   free; the arrow controls and arrow keys scroll the same track. */
-export default function ProductRail({ products, label = 'Chocolates' }) {
+   free; the arrow controls and arrow keys scroll the same track.
+   The document is RTL, so scrollLeft runs negative and "forward" is leftwards. */
+export default function ProductRail({ products, label = 'شکلاتها' }) {
   const trackRef = useRef(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -12,8 +13,9 @@ export default function ProductRail({ products, label = 'Chocolates' }) {
   const sync = useCallback(() => {
     const track = trackRef.current;
     if (!track) return;
-    setAtStart(track.scrollLeft <= 8);
-    setAtEnd(track.scrollLeft + track.clientWidth >= track.scrollWidth - 8);
+    const offset = Math.abs(track.scrollLeft);
+    setAtStart(offset <= 8);
+    setAtEnd(offset + track.clientWidth >= track.scrollWidth - 8);
   }, []);
 
   useEffect(() => {
@@ -31,15 +33,17 @@ export default function ProductRail({ products, label = 'Chocolates' }) {
   const nudge = (direction) => {
     const track = trackRef.current;
     if (!track) return;
-    track.scrollBy({ left: direction * Math.max(260, track.clientWidth * 0.75), behavior: 'smooth' });
+    const amount = Math.max(260, track.clientWidth * 0.75);
+    const rtl = window.getComputedStyle(track).direction === 'rtl';
+    track.scrollBy({ left: (rtl ? -1 : 1) * direction * amount, behavior: 'smooth' });
   };
 
   const onKeyDown = (event) => {
-    if (event.key === 'ArrowRight') {
+    if (event.key === 'ArrowLeft') {
       event.preventDefault();
       nudge(1);
     }
-    if (event.key === 'ArrowLeft') {
+    if (event.key === 'ArrowRight') {
       event.preventDefault();
       nudge(-1);
     }
@@ -51,7 +55,7 @@ export default function ProductRail({ products, label = 'Chocolates' }) {
         className="rail__track"
         ref={trackRef}
         role="group"
-        aria-label={`${label}, scrollable list`}
+        aria-label={`${label}، فهرست قابل اسکرول`}
         tabIndex={0}
         onKeyDown={onKeyDown}
       >
@@ -68,18 +72,18 @@ export default function ProductRail({ products, label = 'Chocolates' }) {
           className="rail__btn"
           onClick={() => nudge(-1)}
           disabled={atStart}
-          aria-label="Previous chocolates"
+          aria-label="شکلاتهای قبلی"
         >
-          <ChevronLeft />
+          <ChevronRight />
         </button>
         <button
           type="button"
           className="rail__btn"
           onClick={() => nudge(1)}
           disabled={atEnd}
-          aria-label="Next chocolates"
+          aria-label="شکلاتهای بعدی"
         >
-          <ChevronRight />
+          <ChevronLeft />
         </button>
       </div>
     </div>

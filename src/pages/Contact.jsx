@@ -15,11 +15,11 @@ export default function Contact() {
   const onSubmit = async (event) => {
     event.preventDefault();
     const next = {};
-    if (!values.name.trim()) next.name = 'Please tell us your name.';
+    if (!values.name.trim()) next.name = 'لطفاً نام خود را بنویسید.';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(values.email.trim())) {
-      next.email = 'Please enter a valid email address.';
+      next.email = 'لطفاً یک نشانی ایمیل معتبر وارد کنید.';
     }
-    if (!values.message.trim()) next.message = 'Please add a short message.';
+    if (!values.message.trim()) next.message = 'لطفاً پیام کوتاهی بنویسید.';
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
@@ -33,11 +33,11 @@ export default function Contact() {
     <>
       <section className="page-hero">
         <div className="shell">
-          <span className="eyebrow">Contact</span>
-          <h1>Talk to ANAHITA</h1>
+          <span className="eyebrow">تماس</span>
+          <h1>با آناهیتا حرف بزنید</h1>
           <p className="lede" style={{ marginTop: '1.1rem' }}>
-            Questions about a box, an ingredient list or a delivery date — write to us and we will
-            answer in person.
+            پرسشی دربارهی یک جعبه، فهرست مواد اولیه یا تاریخ تحویل دارید؟ برای ما بنویسید؛ خودمان
+            پاسخ میدهیم.
           </p>
         </div>
       </section>
@@ -47,8 +47,8 @@ export default function Contact() {
           <Reveal>
             <div className="info-block">
               <span className="info-block__heading">
-                <PinIcon width={15} height={15} style={{ verticalAlign: '-2px', marginRight: 8 }} />
-                The boutique
+                <PinIcon width={15} height={15} style={{ verticalAlign: '-2px', marginInlineEnd: 8 }} />
+                بوتیک
               </span>
               {boutique.addressLines.length > 0 ? (
                 <ul>
@@ -58,13 +58,13 @@ export default function Contact() {
                 </ul>
               ) : (
                 <p className="to-be-confirmed" style={{ margin: 0 }}>
-                  Address to be confirmed.
+                  نشانی بهزودی اعلام میشود.
                 </p>
               )}
             </div>
 
             <div className="info-block" style={{ marginTop: '1.25rem' }}>
-              <span className="info-block__heading">Direct</span>
+              <span className="info-block__heading">تماس مستقیم</span>
               <ul>
                 <li>
                   {boutique.phone ? (
@@ -72,7 +72,7 @@ export default function Contact() {
                       <PhoneIcon width={15} height={15} /> {boutique.phone}
                     </a>
                   ) : (
-                    <span className="to-be-confirmed">Phone number to be confirmed</span>
+                    <span className="to-be-confirmed">شمارهی تماس بهزودی اعلام میشود</span>
                   )}
                 </li>
                 <li>
@@ -81,7 +81,7 @@ export default function Contact() {
                       <MailIcon width={15} height={15} /> {boutique.email}
                     </a>
                   ) : (
-                    <span className="to-be-confirmed">Email address to be confirmed</span>
+                    <span className="to-be-confirmed">نشانی ایمیل بهزودی اعلام میشود</span>
                   )}
                 </li>
                 <li>
@@ -90,32 +90,32 @@ export default function Contact() {
                       <InstagramIcon width={15} height={15} /> Instagram
                     </a>
                   ) : (
-                    <span className="to-be-confirmed">Instagram link to be added</span>
+                    <span className="to-be-confirmed">لینک اینستاگرام بهزودی اضافه میشود</span>
                   )}
                 </li>
               </ul>
             </div>
 
             <div className="info-block" style={{ marginTop: '1.25rem' }}>
-              <span className="info-block__heading">Corporate & events</span>
+              <span className="info-block__heading">سازمانی و رویدادها</span>
               <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.92rem' }}>
-                For gifting at scale — client boxes, staff milestones, weddings and conferences — use
-                the enquiry form on the{' '}
+                برای هدیه دادن در مقیاس بزرگ — جعبههای مشتریان، رویدادهای کارکنان، ازدواج و همایشها —
+                از فرم استعلام در{' '}
                 <a href="/#corporate" style={{ color: 'var(--gold)' }}>
-                  home page
-                </a>
-                , or mention it in your message here.
+                  صفحهی اصلی
+                </a>{' '}
+                استفاده کنید، یا همینجا در پیامتان بنویسید.
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={120}>
             <form className="corporate__panel" onSubmit={onSubmit} noValidate>
-              <span className="eyebrow">Send a message</span>
+              <span className="eyebrow">ارسال پیام</span>
               <div className="form-grid">
                 <div className={`field ${errors.name ? 'field--invalid' : ''}`}>
                   <label className="field__label" htmlFor="contact-name">
-                    Name
+                    نام
                   </label>
                   <input
                     id="contact-name"
@@ -128,7 +128,7 @@ export default function Contact() {
                 </div>
                 <div className={`field ${errors.email ? 'field--invalid' : ''}`}>
                   <label className="field__label" htmlFor="contact-email">
-                    Email
+                    ایمیل
                   </label>
                   <input
                     id="contact-email"
@@ -142,7 +142,7 @@ export default function Contact() {
                 </div>
                 <div className={`field form-grid--wide ${errors.message ? 'field--invalid' : ''}`}>
                   <label className="field__label" htmlFor="contact-message">
-                    Message
+                    پیام
                   </label>
                   <textarea
                     id="contact-message"
@@ -150,7 +150,7 @@ export default function Contact() {
                     value={values.message}
                     onChange={set('message')}
                     aria-invalid={Boolean(errors.message)}
-                    placeholder="How can we help?"
+                    placeholder="چطور میتوانیم کمک کنیم؟"
                   />
                   {errors.message && <span className="field__error">{errors.message}</span>}
                 </div>
@@ -158,21 +158,21 @@ export default function Contact() {
 
               <div style={{ marginTop: '1.35rem' }}>
                 <button type="submit" className="btn btn--gold" disabled={status === 'sending'}>
-                  {status === 'sending' ? 'Sending…' : 'Send message'}
+                  {status === 'sending' ? 'در حال ارسال…' : 'ارسال پیام'}
                 </button>
               </div>
 
               {status === 'delivered' && (
                 <p className="form-status" style={{ marginTop: '1.25rem' }} role="status">
                   <CheckIcon style={{ color: 'var(--gold)', marginTop: 3, flex: 'none' }} />
-                  Thank you — your message has reached the boutique.
+                  سپاس — پیام شما به بوتیک رسید.
                 </p>
               )}
               {status === 'held' && (
                 <p className="form-status" style={{ marginTop: '1.25rem' }} role="status">
                   <CheckIcon style={{ color: 'var(--gold)', marginTop: 3, flex: 'none' }} />
-                  Thank you — your message is saved on this device. Message delivery is not connected
-                  yet, so please reach the boutique directly in the meantime.
+                  سپاس — پیام شما روی همین دستگاه ذخیره شد. ارسال پیامها هنوز متصل نیست؛ لطفاً در این
+                  فاصله مستقیم با بوتیک در تماس باشید.
                 </p>
               )}
             </form>

@@ -2,26 +2,27 @@ import { Link } from 'react-router-dom';
 import Logo from './Logo.jsx';
 import Newsletter from './Newsletter.jsx';
 import { site } from '../data/site.js';
+import { persianYear } from '../lib/format.js';
 import { InstagramIcon, TelegramIcon, WhatsAppIcon } from './Icons.jsx';
 
 const shopLinks = [
-  { label: 'All chocolates', to: '/chocolates' },
-  { label: 'Pralines & truffles', to: '/chocolates?category=pralines' },
-  { label: 'Signature bars', to: '/chocolates?category=bars' },
-  { label: 'Personalised gifts', to: '/personalise' },
+  { label: 'همهی شکلاتها', to: '/chocolates' },
+  { label: 'پرالین و ترافل', to: '/chocolates?category=pralines' },
+  { label: 'تختهشکلاتهای امضا', to: '/chocolates?category=bars' },
+  { label: 'هدیههای شخصیسازیشده', to: '/personalise' },
 ];
 
 const giftLinks = [
-  { label: 'Gift boxes', to: '/gift-boxes' },
-  { label: 'Collections', to: '/collections' },
-  { label: 'Corporate & events', to: '/#corporate' },
-  { label: 'Gift atelier', to: '/personalise' },
+  { label: 'جعبههای هدیه', to: '/gift-boxes' },
+  { label: 'مجموعهها', to: '/collections' },
+  { label: 'سازمانی و رویدادها', to: '/#corporate' },
+  { label: 'آتلیهی هدیه', to: '/personalise' },
 ];
 
 const houseLinks = [
-  { label: 'Our story', to: '/our-story' },
-  { label: 'The boutique', to: '/boutique' },
-  { label: 'Contact', to: '/contact' },
+  { label: 'داستان ما', to: '/our-story' },
+  { label: 'بوتیک', to: '/boutique' },
+  { label: 'تماس', to: '/contact' },
 ];
 
 export default function Footer() {
@@ -42,7 +43,7 @@ export default function Footer() {
         <div>
           <Logo asLink />
           <p className="lede" style={{ marginTop: '1.25rem', maxWidth: '30ch' }}>
-            Handmade pralines, truffles and chocolate gift boxes, made and packed in our boutique.
+            پرالین، ترافل و جعبههای هدیهی شکلات، دستساز و بستهبندیشده در بوتیک ما.
           </p>
           <div className="social-row">
             {socials.map(({ url, label, Icon }) =>
@@ -51,7 +52,7 @@ export default function Footer() {
                   <Icon />
                 </a>
               ) : (
-                <span key={label} title={`${label} link to be added`} aria-label={`${label} — link to be added`}>
+                <span key={label} title={`لینک ${label} بهزودی اضافه میشود`} aria-label={`${label} — لینک بهزودی اضافه میشود`}>
                   <Icon />
                 </span>
               ),
@@ -60,7 +61,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="footer__heading">Shop</h3>
+          <h3 className="footer__heading">خرید</h3>
           <ul className="footer__links">
             {shopLinks.map((link) => (
               <li key={link.to}>
@@ -71,7 +72,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="footer__heading">Gifting & House</h3>
+          <h3 className="footer__heading">هدیه و خانهی آناهیتا</h3>
           <ul className="footer__links">
             {[...giftLinks, ...houseLinks].map((link) => (
               <li key={link.label}>
@@ -82,13 +83,13 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="footer__heading">The Boutique</h3>
+          <h3 className="footer__heading">بوتیک</h3>
           <ul className="footer__links">
             {boutique.addressLines.length > 0 ? (
               boutique.addressLines.map((line) => <li key={line}>{line}</li>)
             ) : (
               <li>
-                <span className="to-be-confirmed">Address to be confirmed</span>
+                <span className="to-be-confirmed">نشانی بهزودی اعلام میشود</span>
               </li>
             )}
             {boutique.hours.length > 0 ? (
@@ -99,21 +100,21 @@ export default function Footer() {
               ))
             ) : (
               <li>
-                <span className="to-be-confirmed">Opening hours to be confirmed</span>
+                <span className="to-be-confirmed">ساعات کاری بهزودی اعلام میشود</span>
               </li>
             )}
             <li>
               {boutique.phone ? (
                 <a href={`tel:${boutique.phone.replace(/\s+/g, '')}`}>{boutique.phone}</a>
               ) : (
-                <span className="to-be-confirmed">Phone number to be confirmed</span>
+                <span className="to-be-confirmed">شمارهی تماس بهزودی اعلام میشود</span>
               )}
             </li>
             <li>
               {boutique.email ? (
                 <a href={`mailto:${boutique.email}`}>{boutique.email}</a>
               ) : (
-                <span className="to-be-confirmed">Email to be confirmed</span>
+                <span className="to-be-confirmed">ایمیل بهزودی اعلام میشود</span>
               )}
             </li>
           </ul>
@@ -121,11 +122,11 @@ export default function Footer() {
       </div>
 
       <div className="shell footer__bottom">
-        <span>© {new Date().getFullYear()} ANAHITA Fine Chocolates. All rights reserved.</span>
+        <span>© {persianYear()} بوتیک شکلات آناهیتا. همهی حقوق محفوظ است.</span>
         <div className="footer__legal">
-          <Link to="/shipping-and-returns">Shipping & returns</Link>
-          <Link to="/privacy">Privacy policy</Link>
-          <Link to="/terms">Terms & conditions</Link>
+          <Link to="/shipping-and-returns">ارسال و بازگشت</Link>
+          <Link to="/privacy">حریم خصوصی</Link>
+          <Link to="/terms">شرایط و قوانین</Link>
         </div>
       </div>
     </footer>

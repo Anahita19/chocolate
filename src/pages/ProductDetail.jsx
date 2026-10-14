@@ -5,8 +5,8 @@ import ProductCard from '../components/ProductCard.jsx';
 import Reveal from '../components/Reveal.jsx';
 import NotFound from './NotFound.jsx';
 import { useCart } from '../lib/cart.jsx';
-import { formatToman } from '../lib/format.js';
-import { findProduct, products } from '../data/products.js';
+import { formatToman, toPersianDigits } from '../lib/format.js';
+import { categories, findProduct, products } from '../data/products.js';
 import { ChevronLeft, ChevronRight, CloseIcon, MinusIcon, PlusIcon, ZoomIcon } from '../components/Icons.jsx';
 
 export default function ProductDetail() {
@@ -44,6 +44,7 @@ export default function ProductDetail() {
   if (!product) return <NotFound />;
 
   const gallery = product.gallery?.length ? product.gallery : [product.image];
+  const categoryLabel = categories.find((option) => option.id === product.category)?.label;
 
   /* Hover zoom: the focal point follows the cursor across the frame. */
   const onStageMove = (event) => {
@@ -63,14 +64,14 @@ export default function ProductDetail() {
     <>
       <section className="page-hero" style={{ paddingTop: 'clamp(6.5rem, 12vw, 9rem)' }}>
         <div className="shell">
-          <nav className="breadcrumb" aria-label="Breadcrumb">
-            <Link to="/">Home</Link>
+          <nav className="breadcrumb" aria-label="مسیر صفحه">
+            <Link to="/">خانه</Link>
             <span aria-hidden="true">/</span>
-            <Link to="/chocolates">Chocolates</Link>
+            <Link to="/chocolates">شکلاتها</Link>
             <span aria-hidden="true">/</span>
             <span>{product.name}</span>
           </nav>
-          <span className="eyebrow">{product.category}</span>
+          <span className="eyebrow">{categoryLabel}</span>
           <h1 style={{ fontSize: 'clamp(2.1rem, 4.6vw, 3.4rem)' }}>{product.name}</h1>
         </div>
       </section>
@@ -91,18 +92,18 @@ export default function ProductDetail() {
                   setLightbox(true);
                 }
               }}
-              aria-label="Open the full-size image"
+              aria-label="باز کردن تصویر در اندازهی بزرگ"
             >
               <FramedImage
                 image={gallery[active]}
-                alt={`${product.name} — ${active === 0 ? 'photographed in the ANAHITA boutique' : 'boutique view'}`}
+                alt={`${product.name} — ${active === 0 ? 'عکاسیشده در بوتیک آناهیتا' : 'نمای بوتیک'}`}
                 ratio="frame--square"
                 eager
                 className="pdp__frame"
                 key={`${product.id}-${active}`}
               />
               <span className="badge" style={{ position: 'absolute', right: '0.85rem', bottom: '0.85rem' }}>
-                <ZoomIcon width={14} height={14} /> Click to enlarge
+                <ZoomIcon width={14} height={14} /> برای بزرگنمایی کلیک کنید
               </span>
             </div>
 
@@ -113,7 +114,7 @@ export default function ProductDetail() {
                   key={`${image.src}-${index}`}
                   className={`pdp__thumb ${index === active ? 'pdp__thumb--active' : ''}`}
                   onClick={() => setActive(index)}
-                  aria-label={`View image ${index + 1} of ${gallery.length}`}
+                  aria-label={`دیدن تصویر ${toPersianDigits(index + 1)} از ${toPersianDigits(gallery.length)}`}
                   aria-current={index === active}
                 >
                   <img
@@ -135,64 +136,64 @@ export default function ProductDetail() {
 
             <div className="pdp__buy">
               <span className="stepper-step">
-                <span className="field__label">Quantity</span>
+                <span className="field__label">تعداد</span>
                 <span className="stepper">
-                  <button type="button" onClick={() => setQty((value) => Math.max(1, value - 1))} aria-label="Decrease quantity">
+                  <button type="button" onClick={() => setQty((value) => Math.max(1, value - 1))} aria-label="کم کردن تعداد">
                     <MinusIcon width={14} height={14} />
                   </button>
                   <span className="stepper__value" aria-live="polite">
-                    {qty}
+                    {toPersianDigits(qty)}
                   </span>
-                  <button type="button" onClick={() => setQty((value) => value + 1)} aria-label="Increase quantity">
+                  <button type="button" onClick={() => setQty((value) => value + 1)} aria-label="افزودن تعداد">
                     <PlusIcon width={14} height={14} />
                   </button>
                 </span>
               </span>
               <button type="button" className="btn btn--ink" onClick={() => addProduct(product, qty)}>
-                Add to bag · {formatToman(product.price * qty)}
+                افزودن به سبد · {formatToman(product.price * qty)}
               </button>
               <Link to="/personalise" className="link-arrow">
-                Personalise a gift
+                شخصیسازی یک هدیه
               </Link>
             </div>
 
             <div className="pdp__block">
-              <h3>Description</h3>
+              <h3>توضیحات</h3>
               <p style={{ margin: 0 }}>{product.description}</p>
             </div>
 
             <div className="pdp__block">
-              <h3>Flavour profile</h3>
+              <h3>پروفایل طعم</h3>
               <p style={{ margin: 0 }}>{product.flavour}</p>
             </div>
 
             <div className="pdp__block">
-              <h3>Ingredients & allergens</h3>
+              <h3>مواد اولیه و آلرژنها</h3>
               <ul className="spec-list">
                 <li>
-                  <span>Ingredients</span>
+                  <span>مواد اولیه</span>
                   <span>{product.ingredients}</span>
                 </li>
                 <li>
-                  <span>Allergens</span>
+                  <span>آلرژنها</span>
                   <span>{product.allergens}</span>
                 </li>
               </ul>
             </div>
 
             <div className="pdp__block">
-              <h3>Details</h3>
+              <h3>جزئیات</h3>
               <ul className="spec-list">
                 <li>
-                  <span>Box size</span>
+                  <span>اندازهی جعبه</span>
                   <span>{product.boxSize}</span>
                 </li>
                 <li>
-                  <span>Weight</span>
+                  <span>وزن</span>
                   <span>{product.weight}</span>
                 </li>
                 <li>
-                  <span>Storage</span>
+                  <span>نگهداری</span>
                   <span>{product.storage}</span>
                 </li>
               </ul>
@@ -205,8 +206,8 @@ export default function ProductDetail() {
         <div className="shell">
           <div className="section-head">
             <div>
-              <span className="eyebrow">From the same shelf</span>
-              <h2 className="section-head__title">You may also like</h2>
+              <span className="eyebrow">از همان قفسه</span>
+              <h2 className="section-head__title">اینها را هم دوست دارید</h2>
             </div>
           </div>
           <div className="grid grid--4">
@@ -220,7 +221,7 @@ export default function ProductDetail() {
       </section>
 
       {lightbox && (
-        <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${product.name} gallery`}>
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label={`گالری ${product.name}`}>
           <div className="lightbox__figure">
             <div
               className="lightbox__stage"
@@ -228,7 +229,7 @@ export default function ProductDetail() {
             >
               <img
                 src={gallery[active].src}
-                alt={`${product.name} — full size view ${active + 1} of ${gallery.length}`}
+                alt={`${product.name} — نمای کامل تصویر ${toPersianDigits(active + 1)} از ${toPersianDigits(gallery.length)}`}
               />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
@@ -236,18 +237,18 @@ export default function ProductDetail() {
                 type="button"
                 className="rail__btn"
                 onClick={() => setActive((index) => (index - 1 + gallery.length) % gallery.length)}
-                aria-label="Previous image"
+                aria-label="تصویر قبلی"
               >
                 <ChevronLeft />
               </button>
               <span className="lightbox__caption">
-                {product.name} · {active + 1} / {gallery.length}
+                {product.name} · {toPersianDigits(active + 1)} / {toPersianDigits(gallery.length)}
               </span>
               <button
                 type="button"
                 className="rail__btn"
                 onClick={() => setActive((index) => (index + 1) % gallery.length)}
-                aria-label="Next image"
+                aria-label="تصویر بعدی"
               >
                 <ChevronRight />
               </button>
@@ -256,9 +257,9 @@ export default function ProductDetail() {
           <button
             type="button"
             className="icon-btn"
-            style={{ position: 'absolute', top: '1.25rem', right: '1.25rem' }}
+            style={{ position: 'absolute', top: '1.25rem', left: '1.25rem' }}
             onClick={() => setLightbox(false)}
-            aria-label="Close gallery"
+            aria-label="بستن گالری"
           >
             <CloseIcon />
           </button>

@@ -25,22 +25,21 @@ export default function Home() {
       <section className="section section--espresso">
         <div className="shell editorial">
           <Reveal>
-            <span className="eyebrow">The house of ANAHITA</span>
+            <span className="eyebrow">خانهی آناهیتا</span>
             <p className="editorial__statement">
-              A boutique built around a single glass case — where the chocolates are made by hand,
-              arranged by flavour, and chosen one piece at a time.
+              بوتیکی ساختهشده حول یک ویترین شیشهای — جایی که شکلاتها با دست ساخته، بر پایهی طعم
+              چیده و دانهدانه انتخاب میشوند.
             </p>
           </Reveal>
           <Reveal delay={120} className="editorial__aside">
             <hr className="hairline" />
             <p className="lede">
-              Dark walnut, black-brown marble and a quiet line of champagne gold: the room is designed
-              to keep the attention on the chocolate. Everything you see in the case is finished the
-              same day it is offered.
+              چوب گردوی تیره، سنگ مرمر سیاهقهوهای و خطی آرام از طلای شامپاینی: اتاق طوری طراحی شده
+              که توجه روی شکلات بماند. هر چه در ویترین میبینید، همان روزی که آماده شده عرضه میشود.
             </p>
             <p className="lede">
-              Whether you are choosing a single praline or assembling a gift for forty, the ritual is
-              the same — warm light, an ivory tray, and a ribbon tied by hand.
+              فرقی نمیکند یک پرالین انتخاب کنید یا هدیهای برای چهل نفر بچینید؛ آیین همان است —
+              نوری گرم، سینی عاجیرنگ و روبانی که با دست گره میخورد.
             </p>
           </Reveal>
         </div>
@@ -51,12 +50,12 @@ export default function Home() {
         <div className="shell">
           <div className="section-head">
             <div>
-              <span className="eyebrow">The art of chocolate</span>
-              <h2 className="section-head__title">Our Signature Collection</h2>
+              <span className="eyebrow">هنر شکلات</span>
+              <h2 className="section-head__title">مجموعهی امضای آناهیتا</h2>
             </div>
             <p className="lede" style={{ maxWidth: '38ch' }}>
-              Eight ways to begin: pralines, truffles, dark and milk collections, pistachio and
-              hazelnut, our signature bars, and the full assortment box.
+              هشت راه برای شروع: پرالین، ترافل، مجموعههای تلخ و شیری، پسته و فندق، تختهشکلاتهای
+              امضای ما و جعبهی کامل ترکیبی.
             </p>
           </div>
 
@@ -70,7 +69,7 @@ export default function Home() {
 
           <div style={{ marginTop: '2.5rem', display: 'flex', justifyContent: 'center' }}>
             <Link to="/chocolates" className="btn">
-              View the whole chocolate case
+              دیدن کل ویترین شکلات
             </Link>
           </div>
         </div>
@@ -81,18 +80,18 @@ export default function Home() {
         <div className="shell">
           <div className="section-head">
             <div>
-              <span className="eyebrow">Gifting</span>
+              <span className="eyebrow">هدیه</span>
               <h2 className="section-head__title" style={{ maxWidth: '26ch' }}>
-                Beautifully Crafted. Thoughtfully Gifted.
+                زیبا ساختهشده، سنجیده هدیه دادهشده.
               </h2>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', maxWidth: '38ch' }}>
               <p className="lede">
-                Deep espresso board, a champagne-gold wordmark, dark satin ribbon and an ivory insert.
-                Each box is filled and tied in the boutique before it leaves us.
+                مقوای قهوهای تیره، نشان طلایی شامپاینی، روبان ساتن تیره و جای عاجیرنگ. هر جعبه پیش
+                از ترک بوتیک، پر و گره میشود.
               </p>
               <Link to="/gift-boxes" className="btn btn--sm" style={{ alignSelf: 'flex-start' }}>
-                Explore gift boxes
+                دیدن جعبههای هدیه
               </Link>
             </div>
           </div>
@@ -112,16 +111,16 @@ export default function Home() {
         <div className="shell">
           <div className="section-head">
             <div>
-              <span className="eyebrow">Loved in the boutique</span>
-              <h2 className="section-head__title">Favourites from ANAHITA</h2>
+              <span className="eyebrow">محبوب در بوتیک</span>
+              <h2 className="section-head__title">محبوبهای آناهیتا</h2>
             </div>
             <p className="lede" style={{ maxWidth: '36ch' }}>
-              A hand-picked shortlist of the pieces our customers return for. Swipe or use the arrows
-              to move along the row.
+              فهرست کوتاهی که دستچین شده از قطعههایی که مشتریان برایشان برمیگردند. برای دیدن ادامهی
+              ردیف، بکشید یا از فلشها استفاده کنید.
             </p>
           </div>
 
-          <ProductRail products={bestsellers} label="Favourite chocolates" />
+          <ProductRail products={bestsellers} label="شکلاتهای محبوب" />
         </div>
       </section>
 
@@ -131,17 +130,17 @@ export default function Home() {
           <Reveal className="craft__media">
             <FramedImage
               image={{ src: '/images/boutique-interior.jpg', focus: '32% 62%', zoom: 4.2 }}
-              alt="Handmade chocolates being arranged by hand in the ANAHITA boutique"
+              alt="شکلاتهای دستساز که با دست در بوتیک آناهیتا چیده میشوند"
               ratio="frame--wide"
             />
             <FramedImage
               image={{ src: '/images/boutique-interior.jpg', focus: '60% 62%', zoom: 4.6 }}
-              alt="Close view of finished pralines and truffles in the display case"
+              alt="نمای نزدیک از پرالینها و ترافلهای آماده در ویترین"
               ratio="frame--square"
             />
             <FramedImage
               image={{ src: '/images/boutique-exterior.jpg', focus: '26% 62%', zoom: 3 }}
-              alt="Boxed chocolates displayed in the boutique window"
+              alt="جعبههای شکلات در ویترین بوتیک"
               ratio="frame--square"
             />
           </Reveal>
@@ -161,7 +160,7 @@ export default function Home() {
               ))}
             </ul>
             <Link to="/our-story" className="btn btn--ink" style={{ marginTop: '1.75rem' }}>
-              Read our story
+              خواندن داستان ما
             </Link>
           </Reveal>
         </div>
@@ -199,7 +198,7 @@ export default function Home() {
 
           <div className="boutique-info" style={{ marginTop: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
             <div className="info-block">
-              <span className="info-block__heading">Visit us</span>
+              <span className="info-block__heading">ما را ببینید</span>
               {site.boutique.addressLines.length > 0 ? (
                 <ul>
                   {site.boutique.addressLines.map((line) => (
@@ -208,12 +207,12 @@ export default function Home() {
                 </ul>
               ) : (
                 <p className="to-be-confirmed" style={{ margin: 0 }}>
-                  The boutique address will be published here shortly.
+                  نشانی بوتیک بهزودی همینجا منتشر میشود.
                 </p>
               )}
             </div>
             <div className="info-block">
-              <span className="info-block__heading">Opening hours</span>
+              <span className="info-block__heading">ساعات کاری</span>
               {site.boutique.hours.length > 0 ? (
                 <ul>
                   {site.boutique.hours.map((slot) => (
@@ -224,12 +223,12 @@ export default function Home() {
                 </ul>
               ) : (
                 <p className="to-be-confirmed" style={{ margin: 0 }}>
-                  Opening hours will be published here shortly.
+                  ساعات کاری بهزودی همینجا منتشر میشود.
                 </p>
               )}
             </div>
             <div className="info-block">
-              <span className="info-block__heading">In the boutique</span>
+              <span className="info-block__heading">در بوتیک</span>
               <ul>
                 {site.boutique.services.map((service) => (
                   <li key={service}>{service}</li>
@@ -240,7 +239,7 @@ export default function Home() {
 
           <div style={{ marginTop: '2.5rem' }}>
             <Link to="/boutique" className="btn btn--gold">
-              Visit our boutique
+              دیدن بوتیک
             </Link>
           </div>
         </div>
@@ -251,14 +250,14 @@ export default function Home() {
         <div className="shell">
           <div className="section-head">
             <div>
-              <span className="eyebrow">What we hold to</span>
-              <h2 className="section-head__title">Four things we do not compromise on</h2>
+              <span className="eyebrow">اصول ما</span>
+              <h2 className="section-head__title">چهار چیزی که بر سرشان معامله نمیکنیم</h2>
             </div>
           </div>
           <div className="values">
             {site.values.map((value, index) => (
               <Reveal key={value.title} delay={index * 80} className="value">
-                <span className="value__index">0{index + 1}</span>
+                <span className="value__index">۰{index + 1}</span>
                 <h3 className="value__title">{value.title}</h3>
                 <p className="value__copy">{value.copy}</p>
               </Reveal>
@@ -271,19 +270,17 @@ export default function Home() {
       <section className="section section--marble" id="corporate">
         <div className="shell corporate">
           <Reveal>
-            <span className="eyebrow">Corporate & events</span>
-            <h2 style={{ maxWidth: '24ch' }}>A Refined Gift for Every Occasion</h2>
+            <span className="eyebrow">سازمانی و رویدادها</span>
+            <h2 style={{ maxWidth: '24ch' }}>هدیهای سنجیده برای هر مناسبت</h2>
             <p className="lede" style={{ marginTop: '1.25rem' }}>
-              Chocolate works for the occasions a memo cannot reach: client thanks, staff milestones,
-              weddings and conferences. Tell us the shape of your event and we will propose a box,
-              a ribbon and a message card.
+              شکلات برای مناسبتهایی کار میکند که یک یادداشت اداری هرگز به آنها نمیرسد: قدردانی از
+              مشتری، رویدادهای کارکنان، ازدواج و همایشها. شکل رویداد خود را بگویید تا جعبه، روبان و
+              کارت پیام را پیشنهاد بدهیم.
             </p>
             <ul className="numbered-notes" style={{ marginTop: '2rem' }}>
-              <li>Choose from the gift boxes we make every day, or a bespoke selection.</li>
-              <li>Message cards can carry your own wording, printed in gold foil.</li>
-              <li>
-                Orders are assembled in batches, so please allow time before a fixed delivery date.
-              </li>
+              <li>از جعبههای هدیهای که هر روز میسازیم انتخاب کنید، یا ترکیبی اختصاصی بخواهید.</li>
+              <li>کارت پیام میتواند نوشتهی خودتان را داشته باشد که با فویل طلایی چاپ میشود.</li>
+              <li>سفارشها دستهای آماده میشوند، پس برای تاریخ تحویل مشخص کمی زمان بگذارید.</li>
             </ul>
           </Reveal>
 
@@ -298,12 +295,13 @@ export default function Home() {
         <div className="shell">
           <div className="section-head">
             <div>
-              <span className="eyebrow">@anahita</span>
-              <h2 className="section-head__title">From the boutique, most days</h2>
+              <span className="eyebrow">اینستاگرام</span>
+              <h2 className="section-head__title">از بوتیک، تقریباً هر روز</h2>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
               <p className="lede" style={{ maxWidth: '34ch' }}>
-                New boxes, finished trays and the odd ribbon test — photographed in the shop as we work.
+                جعبههای تازه، سینیهای آماده و آزمونهای روبان — همانطور که کار میکنیم، در مغازه
+                عکس میگیریم.
               </p>
               {site.boutique.instagramUrl ? (
                 <a
@@ -312,11 +310,11 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  Follow on Instagram <ArrowRight width={16} height={16} />
+                  دنبال کردن در اینستاگرام <ArrowRight width={16} height={16} />
                 </a>
               ) : (
                 <span className="form-note" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <InstagramIcon width={18} height={18} /> Instagram link to be added
+                  <InstagramIcon width={18} height={18} /> لینک اینستاگرام بهزودی اضافه میشود
                 </span>
               )}
             </div>

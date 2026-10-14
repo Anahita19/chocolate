@@ -4,7 +4,7 @@ import Logo from './Logo.jsx';
 import { site } from '../data/site.js';
 import { giftBoxes, products } from '../data/products.js';
 import { useCart } from '../lib/cart.jsx';
-import { formatToman } from '../lib/format.js';
+import { formatToman, toPersianDigits } from '../lib/format.js';
 import {
   BagIcon,
   CloseIcon,
@@ -92,7 +92,7 @@ export default function Header() {
       .map((g) => ({
         key: g.id,
         name: g.name,
-        meta: `Gift box · ${formatToman(g.price)}`,
+        meta: `جعبه هدیه · ${formatToman(g.price)}`,
         image: g.image,
         to: `/gift-boxes#${g.slug}`,
       }));
@@ -115,7 +115,7 @@ export default function Header() {
         <div className="shell site-header__inner">
           <Logo />
 
-          <nav className="site-header__nav" aria-label="Primary">
+          <nav className="site-header__nav" aria-label="فهرست اصلی">
             <div className="nav">
               {site.nav.map((item) => (
                 <NavLink
@@ -135,7 +135,7 @@ export default function Header() {
               type="button"
               className="icon-btn"
               onClick={() => setSearchOpen(true)}
-              aria-label="Search chocolates"
+              aria-label="جستوجوی شکلات"
             >
               <SearchIcon />
             </button>
@@ -144,21 +144,26 @@ export default function Header() {
                 type="button"
                 className="icon-btn"
                 onClick={() => setAccountOpen((open) => !open)}
-                aria-label="Customer account"
+                aria-label="حساب کاربری"
                 aria-expanded={accountOpen}
               >
                 <UserIcon />
               </button>
             </div>
-            <button type="button" className="icon-btn" onClick={openCart} aria-label={`Shopping bag, ${count} items`}>
+            <button
+              type="button"
+              className="icon-btn"
+              onClick={openCart}
+              aria-label={`سبد خرید، ${toPersianDigits(count)} کالا`}
+            >
               <BagIcon />
-              {count > 0 && <span className="icon-btn__count">{count}</span>}
+              {count > 0 && <span className="icon-btn__count">{toPersianDigits(count)}</span>}
             </button>
             <button
               type="button"
               className="icon-btn site-header__menu-btn"
               onClick={() => setMenuOpen(true)}
-              aria-label="Open menu"
+              aria-label="باز کردن منو"
             >
               <MenuIcon />
             </button>
@@ -166,28 +171,33 @@ export default function Header() {
         </div>
 
         {accountOpen && (
-          <div className="account-popover" role="dialog" aria-label="Customer account">
-            <span className="eyebrow">Account</span>
+          <div className="account-popover" role="dialog" aria-label="حساب کاربری">
+            <span className="eyebrow">حساب کاربری</span>
             <p>
-              Customer accounts are not open yet. Place an order as a guest and keep your reference
-              number, or speak to the boutique directly.
+              حسابهای کاربری هنوز فعال نشدهاند. سفارش را بهعنوان مهمان ثبت کنید و کد پیگیری را
+              نگه دارید، یا مستقیم با بوتیک در تماس باشید.
             </p>
             <Link to="/contact" className="link-arrow" onClick={() => setAccountOpen(false)}>
-              Contact the boutique
+              تماس با بوتیک ←
             </Link>
           </div>
         )}
       </header>
 
       {menuOpen && (
-        <div className="mobile-menu" role="dialog" aria-label="Menu">
+        <div className="mobile-menu" role="dialog" aria-label="منو">
           <div className="mobile-menu__head">
             <Logo asLink={false} />
-            <button type="button" className="icon-btn" onClick={() => setMenuOpen(false)} aria-label="Close menu">
+            <button
+              type="button"
+              className="icon-btn"
+              onClick={() => setMenuOpen(false)}
+              aria-label="بستن منو"
+            >
               <CloseIcon />
             </button>
           </div>
-          <nav className="mobile-menu__links" aria-label="Mobile">
+          <nav className="mobile-menu__links" aria-label="منوی موبایل">
             {site.nav.map((item) => (
               <NavLink
                 key={item.to}
@@ -203,21 +213,21 @@ export default function Header() {
           </nav>
           <div className="mobile-menu__foot">
             <Link to="/personalise" className="btn btn--gold" onClick={() => setMenuOpen(false)}>
-              Personalise a gift
+              شخصیسازی یک هدیه
             </Link>
             <button type="button" className="btn" onClick={() => { setMenuOpen(false); setSearchOpen(true); }}>
-              Search chocolates
+              جستوجوی شکلات
             </button>
           </div>
         </div>
       )}
 
       {searchOpen && (
-        <div className="search-overlay" role="dialog" aria-label="Search">
+        <div className="search-overlay" role="dialog" aria-label="جستوجو">
           <div className="search-overlay__form">
             <form onSubmit={submitSearch} style={{ display: 'contents' }}>
               <label className="visually-hidden" htmlFor="site-search">
-                Search chocolates and gift boxes
+                جستوجو در شکلاتها و جعبههای هدیه
               </label>
               <input
                 id="site-search"
@@ -226,13 +236,18 @@ export default function Header() {
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search pralines, truffles, gift boxes…"
+                placeholder="پرالین، ترافل، جعبهی هدیه…"
               />
               <button type="submit" className="btn btn--sm">
-                Search
+                جستوجو
               </button>
             </form>
-            <button type="button" className="icon-btn" onClick={() => setSearchOpen(false)} aria-label="Close search">
+            <button
+              type="button"
+              className="icon-btn"
+              onClick={() => setSearchOpen(false)}
+              aria-label="بستن جستوجو"
+            >
               <CloseIcon />
             </button>
           </div>
@@ -241,7 +256,7 @@ export default function Header() {
             <div className="search-overlay__results">
               {results.length === 0 && (
                 <p className="lede">
-                  Nothing matches “{query.trim()}”. Try “pistachio”, “truffle” or “gift box”.
+                  چیزی با «{query.trim()}» پیدا نشد. «پسته»، «ترافل» یا «جعبه هدیه» را امتحان کنید.
                 </p>
               )}
               {results.map((result) => (

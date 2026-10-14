@@ -60,8 +60,13 @@ Every image is `{ src, focus, zoom }`:
 `focus` is a CSS position in `% %` used as `transform-origin`, `zoom` the scale applied
 on top of `object-fit: cover` (see `src/components/FramedImage.jsx`).
 
-- The boutique photographs in `public/images/` are the only photography available, and
-  product cards are framings of them. Landmarks, measured against the interior shot:
+- `public/images/anahita-bar-box.jpg` is real product photography from the boutique (the
+  bar box with the gold ANAHITA mark on its glass lid). The bar products point straight at
+  it with neutral `focus`/`zoom`; new boutique photos land the same way. Convert a supplied
+  PNG to JPEG before committing — docker image `jrottenberg/ffmpeg:4.4-alpine`,
+  `-vf scale=…:flags=lanczos -q:v 3` (no ffmpeg on the sandbox host).
+- Everything else is a framing of the two boutique photographs in `public/images/`.
+  Landmarks, measured against the interior shot:
   the chocolate case sits at roughly **55–66 % vertically**, the illuminated product
   shelves at about **30–46 %**, the floor is the bright band below ~75 %, and the
   storefront wordmark is the **top ~20 %** of the exterior shot. Aiming below ~75 %
@@ -96,6 +101,23 @@ on top of `object-fit: cover` (see `src/components/FramedImage.jsx`).
   photograph with the same headline, copy and CTAs and no pinned scroll section.
 - The copy fades as the camera starts moving (`--p`, the progress custom property) and stops
   taking pointer events past the half-way point.
+
+## Language and direction (Persian, RTL)
+
+- The site is Persian and right-to-left: `index.html` sets `lang="fa" dir="rtl"`.
+- Persian text is set in **Vazirmatn** (`public/fonts/vazirmatn-{arabic,latin}.woff2`, declared in
+  `src/styles/fonts.css`); `--serif` and `--sans` both lead with it. `--brand-serif` keeps Cormorant
+  Garamond for the Latin ANAHITA lockup in `Logo.jsx` — the wordmark stays Latin on purpose, every
+  other string is Persian.
+- `src/styles/rtl.css` is imported last and holds the corrections the Latin stylesheet needs: it
+  removes letter-spacing (tracking breaks Arabic-script joins) except on the brand lockup, grows the
+  nav underline from the right edge, and re-pins left-aligned blocks. Put RTL fixes there.
+- Every figure a visitor reads goes through `src/lib/format.js`: `formatToman` writes Persian digits
+  with the Persian thousands separator, `toPersianDigits` covers counts, steppers and step numbers,
+  and `persianYear()` is the Solar Hijri year in the footer. Slugs, order references and email
+  addresses stay Latin.
+- `ProductRail` is RTL-aware: `scrollLeft` runs negative here, so it measures with `Math.abs()` and
+  flips both the scroll direction and the arrow keys.
 
 ## What is not connected
 

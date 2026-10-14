@@ -57,7 +57,7 @@ export function CartProvider({ children }) {
         },
         qty,
       );
-      setNotice(`${product.name} added to your bag`);
+      setNotice(`${product.name} به سبد شما اضافه شد`);
       setOpen(true);
     },
     [addItem],
@@ -78,7 +78,7 @@ export function CartProvider({ children }) {
         },
         qty,
       );
-      setNotice(`${box.name} added to your bag`);
+      setNotice(`${box.name} به سبد شما اضافه شد`);
       setOpen(true);
     },
     [addItem],
@@ -101,7 +101,7 @@ export function CartProvider({ children }) {
         },
         qty,
       );
-      setNotice('Your personalised gift has been added to the bag');
+      setNotice('هدیهی شخصیسازیشدهی شما به سبد اضافه شد');
       setOpen(true);
     },
     [addItem],

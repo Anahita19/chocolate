@@ -3,12 +3,13 @@ import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { categories, products } from '../data/products.js';
+import { toPersianDigits } from '../lib/format.js';
 
 const sortOptions = [
-  { id: 'featured', label: 'Featured' },
-  { id: 'price-asc', label: 'Price · low to high' },
-  { id: 'price-desc', label: 'Price · high to low' },
-  { id: 'name', label: 'Name · A to Z' },
+  { id: 'featured', label: 'پیشنهاد ما' },
+  { id: 'price-asc', label: 'قیمت · از کم به زیاد' },
+  { id: 'price-desc', label: 'قیمت · از زیاد به کم' },
+  { id: 'name', label: 'نام · الف تا ی' },
 ];
 
 export default function Shop() {
@@ -42,7 +43,7 @@ export default function Shop() {
 
     if (sort === 'price-asc') list = [...list].sort((a, b) => a.price - b.price);
     if (sort === 'price-desc') list = [...list].sort((a, b) => b.price - a.price);
-    if (sort === 'name') list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+    if (sort === 'name') list = [...list].sort((a, b) => a.name.localeCompare(b.name, 'fa'));
     return list;
   }, [category, query, sort]);
 
@@ -50,11 +51,11 @@ export default function Shop() {
     <>
       <section className="page-hero">
         <div className="shell">
-          <span className="eyebrow">The chocolate case</span>
-          <h1>Our Chocolates</h1>
+          <span className="eyebrow">ویترین شکلات</span>
+          <h1>شکلاتهای ما</h1>
           <p className="lede" style={{ marginTop: '1.1rem' }}>
-            Everything we make, arranged as it is in the boutique — from single pralines to the full
-            twenty-four piece assortment. Prices are in Iranian toman.
+            هر چه میسازیم، به همان ترتیبی که در بوتیک چیده شده — از یک پرالین تنها تا مجموعهی کامل
+            بیستوچهار قطعهای. قیمتها به تومان است.
           </p>
         </div>
       </section>
@@ -62,7 +63,7 @@ export default function Shop() {
       <section className="section section--ivory" style={{ paddingTop: 'clamp(2rem, 4vw, 3rem)' }}>
         <div className="shell">
           <div className="filter-bar" style={{ justifyContent: 'space-between' }}>
-            <div className="filter-bar__scroll" role="group" aria-label="Filter by category">
+            <div className="filter-bar__scroll" role="group" aria-label="فیلتر بر اساس دسته">
               {categories.map((option) => (
                 <button
                   key={option.id}
@@ -86,7 +87,7 @@ export default function Shop() {
               >
                 <div className="field" style={{ minWidth: '200px' }}>
                   <label className="field__label" htmlFor="shop-search">
-                    Search
+                    جستوجو
                   </label>
                   <input
                     id="shop-search"
@@ -94,17 +95,17 @@ export default function Shop() {
                     type="search"
                     value={searchDraft}
                     onChange={(event) => setSearchDraft(event.target.value)}
-                    placeholder="Pistachio, truffle…"
+                    placeholder="پسته، ترافل…"
                   />
                 </div>
                 <button type="submit" className="btn btn--ink btn--sm">
-                  Find
+                  بگرد
                 </button>
               </form>
 
               <div className="field" style={{ minWidth: '190px' }}>
                 <label className="field__label" htmlFor="shop-sort">
-                  Sort
+                  ترتیب
                 </label>
                 <select
                   id="shop-sort"
@@ -123,10 +124,10 @@ export default function Shop() {
           </div>
 
           <p className="form-note" style={{ marginTop: '1.5rem' }}>
-            {visible.length} {visible.length === 1 ? 'chocolate' : 'chocolates'}
-            {query ? ` matching “${query}”` : ''}
+            {toPersianDigits(visible.length)} شکلات
+            {query ? ` با «${query}»` : ''}
             {category !== 'all'
-              ? ` in ${categories.find((option) => option.id === category)?.label || category}`
+              ? ` در دستهی ${categories.find((option) => option.id === category)?.label || category}`
               : ''}
             .
           </p>
@@ -141,7 +142,7 @@ export default function Shop() {
 
           {visible.length === 0 && (
             <div className="empty-state">
-              <p>Nothing in the case matches that search.</p>
+              <p>چیزی در ویترین با این جستوجو پیدا نشد.</p>
               <button
                 type="button"
                 className="btn btn--ink"
@@ -150,7 +151,7 @@ export default function Shop() {
                   setParams(new URLSearchParams(), { replace: true });
                 }}
               >
-                Show everything
+                نمایش همه
               </button>
             </div>
           )}

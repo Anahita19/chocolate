@@ -1,38 +1,38 @@
-/* Central brand + boutique information. Everything the boutique team may want to
-   edit lives here — including the fields that must be filled in before launch
-   (address, hours, phone, social accounts). Empty fields render as an elegant
-   "to be confirmed" state rather than invented details. */
+/* اطلاعات اصلی برند و بوتیک. هر چیزی که تیم بوتیک ممکن است بخواهد ویرایش کند
+   همینجاست — از جمله فیلدهایی که باید پیش از افتتاح پر شوند (نشانی، ساعات
+   کاری، تلفن و شبکههای اجتماعی). فیلدهای خالی بهجای اطلاعات ساختگی، در
+   رابط کاربری بهشکل شایستهای «بهزودی اعلام میشود» نمایش داده میشوند. */
 export const site = {
-  brand: 'ANAHITA',
+  brand: 'آناهیتا',
   descriptor: 'FINE CHOCOLATES',
-  tagline: 'Where Every Chocolate Becomes an Experience',
+  tagline: 'هر شکلات، یک تجربه',
   heroIntro:
-    'Discover exquisite handmade chocolates, carefully crafted flavours, and beautifully presented gifts in a world of warmth, elegance, and indulgence.',
+    'شکلاتهای دستساز با طعمهایی سنجیده و هدیههایی خوشبستهبندی؛ در دنیایی از گرمی، ظرافت و دلپذیری.',
 
-  /* Prices are held in Iranian toman (integers, no decimals). */
+  /* قیمتها به تومان و بهصورت عدد صحیح نگهداری میشوند. */
   currency: {
     code: 'IRT',
-    label: 'Toman',
-    short: 'T',
+    label: 'تومان',
+    short: 'ت',
   },
 
-  /* Complimentary gift bag unlocked above this cart subtotal (toman).
-     Set to 0 to switch the incentive off. */
+  /* کیسهی هدیهی رایگان بالای این مبلغ سبد فعال میشود (تومان).
+     برای خاموش کردن این مزیت، مقدار را صفر بگذارید. */
   giftBagThreshold: 3000000,
 
   nav: [
-    { label: 'Home', to: '/' },
-    { label: 'Chocolates', to: '/chocolates' },
-    { label: 'Gift Boxes', to: '/gift-boxes' },
-    { label: 'Collections', to: '/collections' },
-    { label: 'Our Story', to: '/our-story' },
-    { label: 'The Boutique', to: '/boutique' },
-    { label: 'Contact', to: '/contact' },
+    { label: 'خانه', to: '/' },
+    { label: 'شکلاتها', to: '/chocolates' },
+    { label: 'جعبههای هدیه', to: '/gift-boxes' },
+    { label: 'مجموعهها', to: '/collections' },
+    { label: 'داستان ما', to: '/our-story' },
+    { label: 'بوتیک', to: '/boutique' },
+    { label: 'تماس', to: '/contact' },
   ],
 
   boutique: {
-    name: 'ANAHITA Fine Chocolates',
-    /* --- fill these in (left empty on purpose: no invented details) --- */
+    name: 'بوتیک شکلات آناهیتا',
+    /* --- اینها را پر کنید (عمداً خالی ماندهاند: جزئیات ساختگی نمیسازیم) --- */
     addressLines: [],
     hours: [],
     phone: '',
@@ -41,108 +41,108 @@ export const site = {
     instagramUrl: '',
     whatsappUrl: '',
     telegramUrl: '',
-    /* ------------------------------------------------------------------ */
+    /* ---------------------------------------------------------------------- */
     services: [
-      'Handmade pralines and truffles, made in small batches',
-      'Chocolate gift boxes and seasonal assortments',
-      'Personalised gifts with a hand-written message',
-      'Corporate and celebration orders',
+      'پرالین و ترافل دستساز، در دستههای کوچک',
+      'جعبههای هدیه و مجموعههای مناسبتی',
+      'هدیههای شخصیسازیشده با کارت دستنویس',
+      'سفارشهای سازمانی و جشنها',
     ],
   },
 
   values: [
     {
-      title: 'Crafted with Care',
-      copy: 'Each piece is finished by hand, one at a time, in small batches.',
+      title: 'ساختهشده با دقت',
+      copy: 'هر قطعه جداگانه و با دست، در دستههای کوچک تکمیل میشود.',
     },
     {
-      title: 'Exceptional Flavours',
-      copy: 'Balanced fillings, deep cocoa and a finish that lingers beautifully.',
+      title: 'طعمهای استثنایی',
+      copy: 'مغزهای متعادل، کاکائوی عمیق و پایانی که خوش مینشیند.',
     },
     {
-      title: 'Beautiful Presentation',
-      copy: 'Chocolate should arrive looking as considered as it tastes.',
+      title: 'ارائهی زیبا',
+      copy: 'شکلات باید همانقدر که خوشمزه است، خوشمنظر هم باشد.',
     },
     {
-      title: 'Thoughtful Gifting',
-      copy: 'From the ribbon to the message card, the gift is the whole experience.',
+      title: 'هدیهای سنجیده',
+      copy: 'از روبان تا کارت پیام، هدیه همان تجربهی کامل است.',
     },
   ],
 };
 
 export const craft = {
-  eyebrow: 'The Craft',
-  title: 'Small Details. Extraordinary Chocolate.',
-  body: 'Every detail matters, from the balance of flavours to the final presentation. Our approach celebrates the beauty of handcrafted chocolate and the pleasure of sharing something exceptional.',
+  eyebrow: 'هنر ساخت',
+  title: 'جزئیات کوچک، شکلاتی استثنایی',
+  body: 'هر جزئیات مهم است؛ از توازن طعمها تا نحوهی ارائه. کار ما بزرگداشت زیبایی شکلات دستساز و لذت به اشتراک گذاشتن چیزی استثنایی است.',
   notes: [
-    'Tempering chocolate by hand until it holds a clean, glossy snap.',
-    'Filling and sealing each praline individually, the same day it is finished.',
-    'Decorating by hand — a pistachio, a hazelnut, a thread of gold.',
-    'Packing every order in the boutique, with the ribbon tied to order.',
+    'تمپر کردن شکلات با دست تا وقتی که خش و جلای تمیز بدهد.',
+    'پر کردن و مهر کردن هر پرالین بهصورت جداگانه، همان روزی که آماده میشود.',
+    'تزئین با دست — یک پسته، یک فندق، نخی از طلا.',
+    'بستهبندی هر سفارش در بوتیک، با روبانی که به سفارش گره میخورد.',
   ],
 };
 
 export const boutiqueStory = {
-  eyebrow: 'The Boutique',
-  title: 'Step Into the World of ANAHITA',
-  body: 'A welcoming chocolate boutique where exceptional flavours, beautiful presentation, and thoughtful service come together.',
+  eyebrow: 'بوتیک',
+  title: 'به دنیای آناهیتا قدم بگذارید',
+  body: 'بوتیکی گرم و دلنشین که در آن طعمهای استثنایی، ارائهی زیبا و خدمتی سنجیده در کنار هم مینشینند.',
 };
 
-/* Framings are read as `object-position` / zoom over the boutique photography.
-   Each entry is a genuinely different view of the same location, so lighting and
-   architecture stay consistent across the gallery. */
+/* قاببندیها بر پایهی همان دو عکس بوتیک خوانده میشوند و بهصورت
+   `object-position` و بزرگنمایی اعمال میشوند. هر قاب، نمایی واقعاً متفاوت از
+   همان فضاست تا نور و معماری در سراسر گالری یکدست بماند. */
 export const boutiqueGallery = [
   {
     src: '/images/boutique-exterior.jpg',
     focus: '50% 30%',
     zoom: 1.05,
-    alt: 'ANAHITA storefront in the evening, warm light glowing through the glass',
-    caption: 'The entrance',
+    alt: 'ویترین بوتیک آناهیتا در غروب، با نوری گرم که از پشت شیشه میتابد',
+    caption: 'ورودی',
     wide: true,
   },
   {
     src: '/images/boutique-interior.jpg',
     focus: '50% 45%',
     zoom: 1,
-    alt: 'Wide view of the boutique interior with the curved illuminated chocolate counter',
-    caption: 'The chocolate counter',
+    alt: 'نمای کلی داخل بوتیک با میز منحنی و روشنشدهی شکلات',
+    caption: 'میز شکلات',
     wide: true,
   },
   {
     src: '/images/boutique-interior.jpg',
     focus: '24% 60%',
     zoom: 2.6,
-    alt: 'The left end of the curved glass display where the case begins',
-    caption: 'Choosing by the case',
+    alt: 'انتهای سمت راست ویترین شیشهای که قاب از آنجا شروع میشود',
+    caption: 'انتخاب از پشت ویترین',
   },
   {
     src: '/images/boutique-interior.jpg',
     focus: '52% 62%',
     zoom: 4.6,
-    alt: 'Close view of the glass display filled with handmade pralines and truffles',
-    caption: 'Handmade pralines',
+    alt: 'نمای نزدیک از ویترین شیشه پر از پرالین و ترافل دستساز',
+    caption: 'پرالینهای دستساز',
   },
   {
     src: '/images/boutique-interior.jpg',
     focus: '84% 31%',
     zoom: 2.8,
-    alt: 'Illuminated shelves in arched alcoves displaying ANAHITA gift boxes',
-    caption: 'The gift wall',
+    alt: 'قفسههای روشن در طاقچههای هلالی که جعبههای هدیهی آناهیتا را نشان میدهند',
+    caption: 'دیوار هدیه',
   },
   {
     src: '/images/boutique-exterior.jpg',
     focus: '50% 12%',
     zoom: 2,
-    alt: 'The ANAHITA wordmark in champagne gold on dark marble',
-    caption: 'The wordmark',
+    alt: 'نشان آناهیتا به رنگ طلایی شامپاینی روی سنگ تیره',
+    caption: 'نشانهی برند',
   },
 ];
 
 export const instagramGallery = [
-  { src: '/images/boutique-interior.jpg', focus: '46% 62%', zoom: 4, alt: 'Assorted handmade chocolates in the display case' },
-  { src: '/images/boutique-interior.jpg', focus: '84% 33%', zoom: 2.8, alt: 'Gift boxes arranged on illuminated shelves' },
-  { src: '/images/boutique-exterior.jpg', focus: '26% 62%', zoom: 3, alt: 'Boxed chocolates displayed in the boutique window' },
-  { src: '/images/boutique-interior.jpg', focus: '28% 62%', zoom: 4.4, alt: 'Close view of decorated pralines' },
-  { src: '/images/boutique-exterior.jpg', focus: '50% 18%', zoom: 1.8, alt: 'The ANAHITA gold signage above the entrance' },
-  { src: '/images/boutique-interior.jpg', focus: '20% 35%', zoom: 2.6, alt: 'Pendant lights above the marble counter' },
+  { src: '/images/boutique-interior.jpg', focus: '46% 62%', zoom: 4, alt: 'شکلاتهای دستساز چیدهشده در ویترین' },
+  { src: '/images/boutique-interior.jpg', focus: '84% 33%', zoom: 2.8, alt: 'جعبههای هدیه چیدهشده روی قفسههای روشن' },
+  { src: '/images/boutique-exterior.jpg', focus: '26% 62%', zoom: 3, alt: 'جعبههای شکلات در ویترین بوتیک' },
+  { src: '/images/boutique-interior.jpg', focus: '28% 62%', zoom: 4.4, alt: 'نمای نزدیک از پرالینهای تزئینشده' },
+  { src: '/images/boutique-exterior.jpg', focus: '50% 18%', zoom: 1.8, alt: 'تابلوی طلایی آناهیتا بالای ورودی' },
+  { src: '/images/boutique-interior.jpg', focus: '20% 35%', zoom: 2.6, alt: 'چراغهای آویز بالای میز سنگی' },
 ];

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { formatToman } from '../lib/format.js';
+import { formatToman, toPersianDigits } from '../lib/format.js';
 import { site } from '../data/site.js';
 
 export default function OrderConfirmation() {
@@ -11,18 +11,18 @@ export default function OrderConfirmation() {
       <>
         <section className="page-hero" style={{ paddingTop: 'clamp(6.5rem, 12vw, 9rem)' }}>
           <div className="shell">
-            <span className="eyebrow">Order</span>
-            <h1>No order to show</h1>
+            <span className="eyebrow">سفارش</span>
+            <h1>سفارشی برای نمایش نیست</h1>
           </div>
         </section>
         <section className="section section--dark">
           <div className="shell empty-cart">
             <p className="lede">
-              This page shows the summary of an order you have just placed. Start from the chocolate
-              case and your reference number will appear here.
+              این صفحه خلاصهی سفارشی را نشان میدهد که همین حالا ثبت کردهاید. از ویترین شکلاتها شروع
+              کنید تا کد پیگیری شما اینجا بیاید.
             </p>
             <Link to="/chocolates" className="btn btn--gold">
-              Explore our chocolates
+              دیدن شکلاتها
             </Link>
           </div>
         </section>
@@ -34,11 +34,13 @@ export default function OrderConfirmation() {
     <>
       <section className="page-hero" style={{ paddingTop: 'clamp(6.5rem, 12vw, 9rem)' }}>
         <div className="shell">
-          <span className="eyebrow">Order request received</span>
-          <h1 style={{ fontSize: 'clamp(2rem, 4.4vw, 3.1rem)' }}>Thank you, {order.contact.fullName}.</h1>
+          <span className="eyebrow">سفارش شما ثبت شد</span>
+          <h1 style={{ fontSize: 'clamp(2rem, 4.4vw, 3.1rem)' }}>
+            سپاس، {order.contact.fullName}.
+          </h1>
           <p className="lede" style={{ marginTop: '1rem' }}>
-            Your order has reached the boutique as a request. We will confirm availability, delivery
-            and payment with you — nothing has been charged.
+            سفارش شما بهعنوان درخواست به بوتیک رسید. موجودی، زمان ارسال و پرداخت را با شما تأیید
+            میکنیم — هیچ مبلغی دریافت نشده است.
           </p>
         </div>
       </section>
@@ -46,35 +48,35 @@ export default function OrderConfirmation() {
       <section className="section section--dark" style={{ paddingTop: 'clamp(2rem, 4vw, 3rem)' }}>
         <div className="shell">
           <div className="confirm">
-            <span className="confirm__reference">Reference · {order.reference}</span>
+            <span className="confirm__reference">کد پیگیری · {order.reference}</span>
             <p className="to-be-confirmed" style={{ margin: 0 }}>
-              Keep this reference for any follow-up by phone or email.
+              این کد را برای هر پیگیری تلفنی یا ایمیلی نگه دارید.
             </p>
           </div>
 
           <div className="checkout" style={{ marginTop: 'clamp(2rem, 4vw, 3rem)' }}>
             <div className="checkout__block">
               <h2 className="checkout__legend">
-                Your chocolates <small>{order.items.length} lines</small>
+                شکلاتهای شما <small>{toPersianDigits(order.items.length)} ردیف</small>
               </h2>
               <ul className="summary-list" style={{ gap: '0.85rem' }}>
                 {order.items.map((item) => (
                   <li key={`${item.name}-${item.qty}`}>
-                    {item.qty} × {item.name}
-                    {item.selection?.message ? ` — “${item.selection.message}”` : ''}{' '}
-                    <span style={{ float: 'right' }}>{formatToman(item.price * item.qty)}</span>
+                    {toPersianDigits(item.qty)} × {item.name}
+                    {item.selection?.message ? ` — «${item.selection.message}»` : ''}{' '}
+                    <span style={{ float: 'left' }}>{formatToman(item.price * item.qty)}</span>
                   </li>
                 ))}
               </ul>
               <hr className="hairline" style={{ margin: '1.25rem 0 1rem' }} />
               <div className="summary-row summary-row--total">
-                <span>Total</span>
+                <span>مجموع</span>
                 <span>{formatToman(order.subtotal)}</span>
               </div>
             </div>
 
             <div className="checkout__summary">
-              <span className="eyebrow">Delivering to</span>
+              <span className="eyebrow">تحویل به</span>
               <ul className="summary-list" style={{ marginTop: '1rem' }}>
                 <li>
                   <span>{order.contact.fullName}</span>
@@ -82,7 +84,7 @@ export default function OrderConfirmation() {
                 <li>{order.contact.address}</li>
                 <li>
                   {order.contact.city}
-                  {order.contact.postcode ? `, ${order.contact.postcode}` : ''}
+                  {order.contact.postcode ? `، ${order.contact.postcode}` : ''}
                 </li>
                 <li>
                   <span>{order.contact.email}</span>
@@ -94,7 +96,7 @@ export default function OrderConfirmation() {
               {order.contact.notes && (
                 <>
                   <hr className="hairline" style={{ margin: '1.25rem 0' }} />
-                  <span className="eyebrow">Your note</span>
+                  <span className="eyebrow">یادداشت شما</span>
                   <p className="lede" style={{ margin: '0.5rem 0 0' }}>
                     {order.contact.notes}
                   </p>
@@ -102,30 +104,29 @@ export default function OrderConfirmation() {
               )}
 
               <hr className="hairline" style={{ margin: '1.25rem 0' }} />
-              <span className="eyebrow">What happens next</span>
+              <span className="eyebrow">بعد از این چه میشود</span>
               <ol className="numbered-notes" style={{ marginTop: '0.75rem' }}>
-                <li>We check the case and confirm what can be prepared for your date.</li>
-                <li>We contact you with the delivery cost and a payment method.</li>
-                <li>Your chocolates are packed and the ribbon tied on the day they leave us.</li>
+                <li>ویترین را بررسی میکنیم و میگوییم چه چیزی برای تاریخ شما آماده میشود.</li>
+                <li>برای هزینهی ارسال و روش پرداخت با شما تماس میگیریم.</li>
+                <li>شکلاتهای شما بستهبندی میشود و روبان همان روزی که از ما بیرون میرود گره میخورد.</li>
               </ol>
 
               <p className="form-note" style={{ marginTop: '1rem' }}>
-                No online payment has been taken. Order storage and email confirmations are connected
-                once the boutique's systems are live — until then this summary lives in your browser
-                only.
+                هیچ پرداخت آنلاینی انجام نشده است. ذخیرهی سفارش و ایمیل تأیید، هنگامی که سیستمهای
+                بوتیک راهاندازی شوند متصل میشوند — تا آن زمان این خلاصه فقط در مرورگر شماست.
               </p>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '1.25rem' }}>
                 <Link to="/chocolates" className="btn btn--gold">
-                  Continue shopping
+                  ادامهی خرید
                 </Link>
                 <Link to="/contact" className="btn">
-                  Contact the boutique
+                  تماس با بوتیک
                 </Link>
               </div>
               {site.boutique.phone && (
                 <p className="form-note" style={{ marginTop: '1rem' }}>
-                  Prefer to speak to us? Call {site.boutique.phone}.
+                  ترجیح میدهید تلفنی صحبت کنید؟ با {site.boutique.phone} تماس بگیرید.
                 </p>
               )}
             </div>

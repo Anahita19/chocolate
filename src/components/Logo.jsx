@@ -32,7 +32,7 @@ export default function Logo({ size = 'md', variant = 'gold', to = '/', asLink =
   if (!asLink) return inner;
 
   return (
-    <Link to={to} aria-label="ANAHITA Fine Chocolates — home">
+    <Link to={to} aria-label="آناهیتا، شکلات دستساز — صفحهی اصلی">
       {inner}
     </Link>
   );

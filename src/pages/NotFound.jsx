@@ -6,20 +6,19 @@ export default function NotFound() {
     <section className="section section--dark" style={{ paddingTop: 'clamp(8rem, 16vw, 12rem)' }}>
       <div className="shell empty-cart">
         <Emblem className="brand__emblem" style={{ width: 40, height: 24 }} />
-        <span className="eyebrow">Page not found</span>
+        <span className="eyebrow">صفحه پیدا نشد</span>
         <h1 style={{ fontSize: 'clamp(1.9rem, 4.2vw, 2.9rem)', maxWidth: '24ch' }}>
-          That shelf is empty
+          این قفسه خالی است
         </h1>
         <p className="lede" style={{ maxWidth: '46ch' }}>
-          The page you asked for is not in the boutique. The chocolate case is the best place to
-          start.
+          صفحهای که خواستید در بوتیک نیست. ویترین شکلاتها بهترین نقطه برای شروع است.
         </p>
         <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', justifyContent: 'center' }}>
           <Link to="/chocolates" className="btn btn--gold">
-            Explore our chocolates
+            دیدن شکلاتها
           </Link>
           <Link to="/" className="btn">
-            Back to home
+            بازگشت به خانه
           </Link>
         </div>
       </div>

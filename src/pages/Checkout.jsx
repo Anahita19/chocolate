@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../lib/cart.jsx';
-import { formatToman, orderReference } from '../lib/format.js';
+import { formatToman, orderReference, toPersianDigits } from '../lib/format.js';
 import { startPayment, submitOrder } from '../lib/integrations.js';
 import { CheckIcon } from '../components/Icons.jsx';
 
@@ -27,13 +27,13 @@ export default function Checkout() {
   const onSubmit = async (event) => {
     event.preventDefault();
     const next = {};
-    if (!values.fullName.trim()) next.fullName = 'Please add the name for the order.';
+    if (!values.fullName.trim()) next.fullName = 'لطفاً نامی برای این سفارش بنویسید.';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(values.email.trim())) {
-      next.email = 'Please add a valid email address.';
+      next.email = 'لطفاً یک نشانی ایمیل معتبر وارد کنید.';
     }
-    if (!values.phone.trim()) next.phone = 'Please add a phone number for delivery.';
-    if (!values.address.trim()) next.address = 'Please add the delivery address.';
-    if (!values.city.trim()) next.city = 'Please add the city.';
+    if (!values.phone.trim()) next.phone = 'لطفاً یک شمارهی تماس برای ارسال بگذارید.';
+    if (!values.address.trim()) next.address = 'لطفاً نشانی تحویل را بنویسید.';
+    if (!values.city.trim()) next.city = 'لطفاً شهر را بنویسید.';
     setErrors(next);
     if (Object.keys(next).length > 0) {
       const firstField = document.getElementById(`checkout-${Object.keys(next)[0]}`);
@@ -69,19 +69,19 @@ export default function Checkout() {
       <>
         <section className="page-hero" style={{ paddingTop: 'clamp(6.5rem, 12vw, 9rem)' }}>
           <div className="shell">
-            <span className="eyebrow">Checkout</span>
-            <h1>Your bag is empty</h1>
+            <span className="eyebrow">تکمیل سفارش</span>
+            <h1>سبد شما خالی است</h1>
           </div>
         </section>
         <section className="section section--dark">
           <div className="shell empty-cart">
-            <p className="lede">Add a box of chocolates and it will appear here, ready for checkout.</p>
+            <p className="lede">یک جعبه شکلات اضافه کنید تا همینجا، آمادهی تکمیل سفارش، ظاهر شود.</p>
             <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', justifyContent: 'center' }}>
               <Link to="/chocolates" className="btn btn--gold">
-                Explore our chocolates
+                دیدن شکلاتها
               </Link>
               <Link to="/gift-boxes" className="btn">
-                Explore gift boxes
+                دیدن جعبههای هدیه
               </Link>
             </div>
           </div>
@@ -94,16 +94,16 @@ export default function Checkout() {
     <>
       <section className="page-hero" style={{ paddingTop: 'clamp(6.5rem, 12vw, 9rem)' }}>
         <div className="shell">
-          <nav className="breadcrumb" aria-label="Breadcrumb">
-            <Link to="/chocolates">Chocolates</Link>
+          <nav className="breadcrumb" aria-label="مسیر صفحه">
+            <Link to="/chocolates">شکلاتها</Link>
             <span aria-hidden="true">/</span>
-            <span>Checkout</span>
+            <span>تکمیل سفارش</span>
           </nav>
-          <span className="eyebrow">Checkout</span>
-          <h1 style={{ fontSize: 'clamp(2rem, 4.4vw, 3.1rem)' }}>Complete your order request</h1>
+          <span className="eyebrow">تکمیل سفارش</span>
+          <h1 style={{ fontSize: 'clamp(2rem, 4.4vw, 3.1rem)' }}>سفارش خود را نهایی کنید</h1>
           <p className="lede" style={{ marginTop: '1rem' }}>
-            No payment is taken on the website yet: your order arrives with the boutique, we confirm
-            availability and delivery, and arrange payment with you directly.
+            هنوز پرداختی در سایت انجام نمیشود: سفارش شما به بوتیک میرسد، موجودی و زمان ارسال را
+            تأیید میکنیم و پرداخت را مستقیم با شما هماهنگ میکنیم.
           </p>
         </div>
       </section>
@@ -113,12 +113,12 @@ export default function Checkout() {
           <form onSubmit={onSubmit} noValidate>
             <fieldset className="checkout__block" style={{ border: 0, padding: 0, margin: 0 }}>
               <legend className="checkout__legend">
-                Contact <small>Required</small>
+                اطلاعات تماس <small>الزامی</small>
               </legend>
               <div className="form-grid">
                 <div className={`field ${errors.fullName ? 'field--invalid' : ''}`}>
                   <label className="field__label" htmlFor="checkout-fullName">
-                    Full name
+                    نام و نام خانوادگی
                   </label>
                   <input
                     id="checkout-fullName"
@@ -132,7 +132,7 @@ export default function Checkout() {
                 </div>
                 <div className={`field ${errors.email ? 'field--invalid' : ''}`}>
                   <label className="field__label" htmlFor="checkout-email">
-                    Email
+                    ایمیل
                   </label>
                   <input
                     id="checkout-email"
@@ -147,7 +147,7 @@ export default function Checkout() {
                 </div>
                 <div className={`field ${errors.phone ? 'field--invalid' : ''}`}>
                   <label className="field__label" htmlFor="checkout-phone">
-                    Phone
+                    تلفن
                   </label>
                   <input
                     id="checkout-phone"
@@ -164,12 +164,12 @@ export default function Checkout() {
 
             <fieldset className="checkout__block" style={{ border: 0, padding: 0, margin: 0 }}>
               <legend className="checkout__legend">
-                Delivery address <small>Required</small>
+                نشانی تحویل <small>الزامی</small>
               </legend>
               <div className="form-grid">
                 <div className={`field form-grid--wide ${errors.address ? 'field--invalid' : ''}`}>
                   <label className="field__label" htmlFor="checkout-address">
-                    Address
+                    نشانی
                   </label>
                   <input
                     id="checkout-address"
@@ -183,7 +183,7 @@ export default function Checkout() {
                 </div>
                 <div className={`field ${errors.city ? 'field--invalid' : ''}`}>
                   <label className="field__label" htmlFor="checkout-city">
-                    City
+                    شهر
                   </label>
                   <input
                     id="checkout-city"
@@ -197,7 +197,7 @@ export default function Checkout() {
                 </div>
                 <div className="field">
                   <label className="field__label" htmlFor="checkout-postcode">
-                    Postal code
+                    کد پستی
                   </label>
                   <input
                     id="checkout-postcode"
@@ -209,30 +209,30 @@ export default function Checkout() {
                 </div>
                 <div className="field form-grid--wide">
                   <label className="field__label" htmlFor="checkout-notes">
-                    Delivery notes
+                    توضیحات ارسال
                   </label>
                   <textarea
                     id="checkout-notes"
                     className="field__textarea"
                     value={values.notes}
                     onChange={set('notes')}
-                    placeholder="Preferred date, gift recipient, anything we should know…"
+                    placeholder="تاریخ دلخواه، گیرندهی هدیه، هر نکتهی دیگری…"
                   />
                 </div>
               </div>
             </fieldset>
 
             <button type="submit" className="btn btn--gold btn--block" disabled={submitting}>
-              {submitting ? 'Sending your order…' : 'Send order request'}
+              {submitting ? 'در حال ارسال سفارش…' : 'ثبت سفارش'}
             </button>
             <p className="form-note" style={{ marginTop: '1rem' }}>
-              You will receive a reference number immediately. Payment is arranged with the boutique —
-              no card details are collected here.
+              همین حالا کد پیگیری میگیرید. پرداخت با بوتیک هماهنگ میشود — هیچ اطلاعات کارتی اینجا
+              گرفته نمیشود.
             </p>
           </form>
 
           <aside className="checkout__summary">
-            <span className="eyebrow">Order summary</span>
+            <span className="eyebrow">خلاصهی سفارش</span>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1.25rem' }}>
               {items.map((item) => (
@@ -252,15 +252,15 @@ export default function Checkout() {
                         <button
                           type="button"
                           onClick={() => setQty(item.key, item.qty - 1)}
-                          aria-label={`Decrease quantity of ${item.name}`}
+                          aria-label={`کم کردن تعداد ${item.name}`}
                         >
                           −
                         </button>
-                        <span className="stepper__value">{item.qty}</span>
+                        <span className="stepper__value">{toPersianDigits(item.qty)}</span>
                         <button
                           type="button"
                           onClick={() => setQty(item.key, item.qty + 1)}
-                          aria-label={`Increase quantity of ${item.name}`}
+                          aria-label={`افزودن تعداد ${item.name}`}
                         >
                           +
                         </button>
@@ -273,7 +273,7 @@ export default function Checkout() {
                       onClick={() => removeItem(item.key)}
                       style={{ marginTop: '0.5rem' }}
                     >
-                      Remove
+                      حذف
                     </button>
                   </div>
                 </div>
@@ -283,24 +283,23 @@ export default function Checkout() {
             <hr className="hairline" style={{ margin: '1.5rem 0 1rem' }} />
 
             <div className="summary-row">
-              <span>Subtotal</span>
+              <span>جمع جزء</span>
               <span>{formatToman(subtotal)}</span>
             </div>
             <div className="summary-row">
-              <span>Delivery</span>
-              <span>Arranged with the boutique</span>
+              <span>ارسال</span>
+              <span>با بوتیک هماهنگ میشود</span>
             </div>
             <div className="summary-row summary-row--total">
-              <span>Total</span>
+              <span>مجموع</span>
               <span>{formatToman(subtotal)}</span>
             </div>
             <p className="form-note" style={{ marginTop: '1rem' }}>
-              Prices are in Iranian toman. Allergen and ingredient details are listed on each product
-              page.
+              قیمتها به تومان است. اطلاعات آلرژن و مواد اولیه در صفحهی هر محصول آمده است.
             </p>
             <p className="form-status" style={{ marginTop: '1rem' }}>
               <CheckIcon style={{ color: 'var(--gold)', marginTop: 3, flex: 'none' }} />
-              Delivery cost is confirmed by the boutique with your order, so nothing is charged online.
+              هزینهی ارسال با سفارش شما و توسط بوتیک تأیید میشود، پس هیچ مبلغی آنلاین پرداخت نمیشود.
             </p>
           </aside>
         </div>

@@ -167,29 +167,29 @@ export default function HeroCinematic() {
           <div className="hero__inner">
             <Emblem className="brand__emblem" />
             <h1 className="hero__title" style={{ marginTop: '1.1rem' }}>
-              Anahita
+              آناهیتا
             </h1>
-            <span className="hero__descriptor">Fine Chocolates</span>
-            <p className="hero__tagline">“{site.tagline}”</p>
+            <span className="hero__descriptor">شکلات دستساز</span>
+            <p className="hero__tagline">«{site.tagline}»</p>
             <p className="hero__lede">{site.heroIntro}</p>
             <div className="hero__actions">
               <Link to="/chocolates" className="btn btn--gold">
-                Explore our chocolates
+                دیدن شکلاتها
               </Link>
               <Link to="/boutique" className="btn">
-                Discover our boutique
+                آشنایی با بوتیک
               </Link>
             </div>
             <div className="hero__assurances">
-              <span>Handmade in small batches</span>
-              <span>Packed in the boutique</span>
-              <span>Personalised gifts</span>
+              <span>دستساز در دستههای کوچک</span>
+              <span>بستهبندیشده در بوتیک</span>
+              <span>هدیههای شخصیسازیشده</span>
             </div>
           </div>
 
           {scrubbing && (
             <span className="chero__cue" aria-hidden="true">
-              <span className="chero__cue-label">Scroll to explore</span>
+              <span className="chero__cue-label">برای دیدن، اسکرول کنید</span>
               <span className="chero__cue-rule" />
             </span>
           )}
@@ -202,9 +202,9 @@ export default function HeroCinematic() {
             aria-live="polite"
             aria-hidden={ready}
           >
-            <span className="chero__loading-word">Anahita</span>
+            <span className="chero__loading-word">آناهیتا</span>
             <span className="chero__loading-rule" aria-hidden="true" />
-            <span className="chero__loading-note">Preparing the film</span>
+            <span className="chero__loading-note">در حال آمادهسازی فیلم</span>
           </div>
         )}
       </div>

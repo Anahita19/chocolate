@@ -12,7 +12,7 @@ export default function ProductCard({ product, showWeight = true }) {
       <div className="pcard__media">
         <FramedImage
           image={product.image}
-          alt={`${product.name} — handmade chocolate from the ANAHITA boutique`}
+          alt={`${product.name} — شکلات دستساز بوتیک آناهیتا`}
           ratio=""
         />
         <div className="pcard__quick">
@@ -21,7 +21,7 @@ export default function ProductCard({ product, showWeight = true }) {
             className="btn btn--gold btn--block btn--sm"
             onClick={() => addProduct(product)}
           >
-            Add to bag
+            افزودن به سبد
           </button>
         </div>
       </div>
@@ -36,7 +36,7 @@ export default function ProductCard({ product, showWeight = true }) {
           {showWeight && <span className="pcard__weight">{product.weight}</span>}
         </div>
         <Link to={to} className="pcard__link">
-          Product details →
+          جزئیات محصول ←
         </Link>
       </div>
     </article>

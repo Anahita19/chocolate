@@ -321,7 +321,7 @@
 }
 
 .brand__word {
-  font-family: var(--serif);
+  font-family: var(--brand-serif);
   font-weight: 400;
   font-size: 1.42rem;
   letter-spacing: 0.34em;

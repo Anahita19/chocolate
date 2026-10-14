@@ -25,7 +25,7 @@ export default function App() {
   return (
     <CartProvider>
       <a className="skip-link" href="#main">
-        Skip to content
+        رفتن به محتوای اصلی
       </a>
       <ScrollToTop />
       <Header />

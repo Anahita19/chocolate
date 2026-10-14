@@ -12,11 +12,11 @@ export default function GiftBoxes() {
     <>
       <section className="page-hero">
         <div className="shell">
-          <span className="eyebrow">Gifting</span>
-          <h1>Chocolate Gift Boxes</h1>
+          <span className="eyebrow">هدیه</span>
+          <h1>جعبههای هدیهی شکلات</h1>
           <p className="lede" style={{ marginTop: '1.1rem' }}>
-            Beautifully crafted, thoughtfully gifted. Rigid espresso-brown boxes with a champagne-gold
-            wordmark, dark satin ribbon and an ivory insert — filled and tied by hand.
+            زیبا ساختهشده، سنجیده هدیه دادهشده. جعبههای سخت قهوهای با نشان طلایی شامپاینی، روبان
+            ساتن تیره و جای عاجیرنگ — پر و گرهخورده با دست.
           </p>
         </div>
       </section>
@@ -44,26 +44,26 @@ export default function GiftBoxes() {
           <Reveal>
             <FramedImage
               image={{ src: '/images/boutique-interior.jpg', focus: '84% 31%', zoom: 2.8 }}
-              alt="Illuminated arched shelves displaying ANAHITA chocolate gift boxes"
+              alt="قفسههای هلالی روشن با جعبههای هدیهی شکلات آناهیتا"
               ratio="frame--portrait"
             />
           </Reveal>
           <Reveal delay={120}>
-            <span className="eyebrow">The packaging</span>
-            <h2 style={{ maxWidth: '22ch' }}>Built like the shop it comes from</h2>
+            <span className="eyebrow">بستهبندی</span>
+            <h2 style={{ maxWidth: '22ch' }}>به همان استحکام مغازهای که از آن میآید</h2>
             <p className="lede" style={{ marginTop: '1.1rem' }}>
-              The boxes are rigid board in deep espresso, stamped with the ANAHITA wordmark in
-              champagne gold and foiled on the inner lid. Inside, an ivory tray holds each piece in its
-              own place so nothing shifts on the way.
+              جعبهها از مقوای سخت قهوهای تیرهاند، با نشان آناهیتا به رنگ طلای شامپاینی و فویل روی
+              درِ داخلی. داخل، سینی عاجیرنگ هر قطعه را در جای خود نگه میدارد تا در راه چیزی جابهجا
+              نشود.
             </p>
             <ul className="numbered-notes" style={{ marginTop: '1.75rem' }}>
-              <li>Espresso board, gold-stamped, with a matching sleeve.</li>
-              <li>Champagne-gold foil on the lid interior and the message card.</li>
-              <li>Dark satin ribbon tied in the boutique, in the colour you choose.</li>
-              <li>Ivory insert, arranged in the same order as the display case.</li>
+              <li>مقوای قهوهای، نشان طلایی، با روکش همسان.</li>
+              <li>فویل طلای شامپاینی روی درِ داخلی و کارت پیام.</li>
+              <li>روبان ساتن تیره که در بوتیک و به رنگ انتخابی شما گره میخورد.</li>
+              <li>جای عاجیرنگ، به همان ترتیبی که در ویترین چیده شده.</li>
             </ul>
             <p className="form-note" style={{ marginTop: '1.5rem' }}>
-              Packaging photography is planned; the views shown here are of the boutique itself.
+              عکاسی بستهبندی در برنامه است؛ تصاویری که اینجا میبینید از خود بوتیک است.
             </p>
           </Reveal>
         </div>
@@ -71,14 +71,14 @@ export default function GiftBoxes() {
 
       <section className="section section--marble">
         <div className="shell" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'center' }}>
-          <span className="eyebrow">Make it yours</span>
-          <h2 style={{ maxWidth: '26ch' }}>Choose the box, the chocolates, the ribbon and the message</h2>
+          <span className="eyebrow">آن را مال خود کنید</span>
+          <h2 style={{ maxWidth: '26ch' }}>جعبه، شکلات، روبان و پیام را انتخاب کنید</h2>
           <p className="lede" style={{ maxWidth: '52ch' }}>
-            Our gift atelier walks you through each choice and shows the total as you build it — then
-            packs it by hand.
+            آتلیهی هدیهی ما شما را در هر انتخاب همراهی میکند و همزمان مبلغ کل را نشان میدهد — بعد آن
+            را با دست بستهبندی میکنیم.
           </p>
           <Link to="/personalise" className="btn btn--gold">
-            Open the gift atelier
+            رفتن به آتلیهی هدیه
           </Link>
         </div>
       </section>

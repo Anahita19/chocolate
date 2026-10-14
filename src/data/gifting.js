@@ -1,47 +1,47 @@
-/* Gift atelier options. Prices are integer toman additions on top of the base
-   gift box, so the team can re-price without touching a component. */
+/* گزینههای آتلیهی هدیه. قیمتها به تومان و بهصورت مبلغ افزوده بر قیمت پایهی
+   جعبه هستند، تا تیم بتواند بدون دست زدن به کامپوننتها قیمتگذاری را تغییر دهد. */
 export const giftingBasePrice = 1800000;
 
 export const giftBoxSizes = [
-  { id: 'petite', label: 'Petite', detail: '9 pieces', extra: 0 },
-  { id: 'signature', label: 'Signature', detail: '16 pieces', extra: 900000 },
-  { id: 'grand', label: 'Grand', detail: '24 pieces', extra: 1900000 },
+  { id: 'petite', label: 'کوچک', detail: '۹ قطعه', extra: 0 },
+  { id: 'signature', label: 'امضای آناهیتا', detail: '۱۶ قطعه', extra: 900000 },
+  { id: 'grand', label: 'بزرگ', detail: '۲۴ قطعه', extra: 1900000 },
 ];
 
 export const giftAssortments = [
-  { id: 'signature', label: 'Signature selection', extra: 0 },
-  { id: 'dark', label: 'Dark & intense', extra: 250000 },
-  { id: 'pistachio', label: 'Pistachio & nut', extra: 350000 },
-  { id: 'milk', label: 'Milk & caramel', extra: 150000 },
-  { id: 'mixed', label: 'Mixed house selection', extra: 300000 },
+  { id: 'signature', label: 'انتخاب امضای آناهیتا', extra: 0 },
+  { id: 'dark', label: 'تلخ و پرقدرت', extra: 250000 },
+  { id: 'pistachio', label: 'پسته و مغزها', extra: 350000 },
+  { id: 'milk', label: 'شیری و کارامل', extra: 150000 },
+  { id: 'mixed', label: 'ترکیب خانه', extra: 300000 },
 ];
 
 export const giftRibbons = [
-  { id: 'espresso', label: 'Deep espresso satin', extra: 0 },
-  { id: 'gold', label: 'Champagne gold silk', extra: 120000 },
-  { id: 'black', label: 'Matte black', extra: 120000 },
-  { id: 'ivory', label: 'Warm ivory silk', extra: 120000 },
+  { id: 'espresso', label: 'ساتن قهوهای تیره', extra: 0 },
+  { id: 'gold', label: 'ابریشم طلایی شامپاینی', extra: 120000 },
+  { id: 'black', label: 'مشکی مات', extra: 120000 },
+  { id: 'ivory', label: 'ابریشم عاجیرنگ', extra: 120000 },
 ];
 
 export const giftOccasions = [
-  'Birthday',
-  'Anniversary',
-  'Wedding',
-  'Celebration',
-  'Corporate gifting',
-  'A quiet thank you',
+  'تولد',
+  'سالگرد',
+  'ازدواج',
+  'جشن و مناسبت',
+  'هدیهی سازمانی',
+  'یک سپاس بیصدا',
 ];
 
 export const eventTypes = [
-  'Corporate gifting',
-  'Client appreciation',
-  'Staff celebration',
-  'Wedding',
-  'Conference or event',
-  'Other',
+  'هدیهی سازمانی',
+  'قدردانی از مشتریان',
+  'جشن کارکنان',
+  'ازدواج',
+  'کنفرانس یا رویداد',
+  'سایر',
 ];
 
-/** Total price for one personalised gift box. */
+/** قیمت کل یک جعبهی هدیهی شخصیسازیشده. */
 export function giftPrice(selection) {
   const size = giftBoxSizes.find((s) => s.id === selection.size);
   const assortment = giftAssortments.find((a) => a.id === selection.assortment);
@@ -51,7 +51,7 @@ export function giftPrice(selection) {
   );
 }
 
-/** Human-readable summary of a gift configuration, used in the cart. */
+/** خلاصهی خوانا از یک ترکیب هدیه، برای نمایش در سبد خرید. */
 export function giftSummary(selection) {
   const size = giftBoxSizes.find((s) => s.id === selection.size);
   const assortment = giftAssortments.find((a) => a.id === selection.assortment);

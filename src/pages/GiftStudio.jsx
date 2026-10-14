@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import FramedImage from '../components/FramedImage.jsx';
 import { useCart } from '../lib/cart.jsx';
-import { formatToman } from '../lib/format.js';
+import { formatToman, toPersianDigits } from '../lib/format.js';
 import {
   giftingBasePrice,
   giftAssortments,
@@ -48,11 +48,10 @@ export default function GiftStudio() {
     <>
       <section className="page-hero">
         <div className="shell">
-          <span className="eyebrow">The gift atelier</span>
-          <h1>Personalise a Chocolate Gift</h1>
+          <span className="eyebrow">آتلیهی هدیه</span>
+          <h1>شخصیسازی یک هدیهی شکلات</h1>
           <p className="lede" style={{ marginTop: '1.1rem' }}>
-            Choose the box, the chocolates, the ribbon and the message. We assemble it by hand and tie
-            it in the boutique.
+            جعبه، شکلات، روبان و پیام را انتخاب کنید. ما آن را با دست میچینیم و در بوتیک گره میزنیم.
           </p>
         </div>
       </section>
@@ -62,8 +61,8 @@ export default function GiftStudio() {
           <div>
             <div className="studio__step">
               <div className="studio__step-head">
-                <span className="studio__step-index">01</span>
-                <h2 className="studio__step-title">Box size</h2>
+                <span className="studio__step-index">۰۱</span>
+                <h2 className="studio__step-title">اندازهی جعبه</h2>
               </div>
               <div className="choice-grid">
                 {giftBoxSizes.map((option) => (
@@ -80,8 +79,8 @@ export default function GiftStudio() {
 
             <div className="studio__step">
               <div className="studio__step-head">
-                <span className="studio__step-index">02</span>
-                <h2 className="studio__step-title">Chocolate assortment</h2>
+                <span className="studio__step-index">۰۲</span>
+                <h2 className="studio__step-title">ترکیب شکلات</h2>
               </div>
               <div className="choice-grid">
                 {giftAssortments.map((option) => (
@@ -90,7 +89,7 @@ export default function GiftStudio() {
                     selected={selection.assortment === option.id}
                     onClick={() => set('assortment')(option.id)}
                     label={option.label}
-                    detail={option.extra ? `+${formatToman(option.extra)}` : 'Included'}
+                    detail={option.extra ? `+${formatToman(option.extra)}` : 'شامل'}
                   />
                 ))}
               </div>
@@ -98,8 +97,8 @@ export default function GiftStudio() {
 
             <div className="studio__step">
               <div className="studio__step-head">
-                <span className="studio__step-index">03</span>
-                <h2 className="studio__step-title">Ribbon</h2>
+                <span className="studio__step-index">۰۳</span>
+                <h2 className="studio__step-title">روبان</h2>
               </div>
               <div className="choice-grid">
                 {giftRibbons.map((option) => (
@@ -108,7 +107,7 @@ export default function GiftStudio() {
                     selected={selection.ribbon === option.id}
                     onClick={() => set('ribbon')(option.id)}
                     label={option.label}
-                    detail={option.extra ? `+${formatToman(option.extra)}` : 'Included'}
+                    detail={option.extra ? `+${formatToman(option.extra)}` : 'شامل'}
                   />
                 ))}
               </div>
@@ -116,8 +115,8 @@ export default function GiftStudio() {
 
             <div className="studio__step">
               <div className="studio__step-head">
-                <span className="studio__step-index">04</span>
-                <h2 className="studio__step-title">Occasion, recipient & message</h2>
+                <span className="studio__step-index">۰۴</span>
+                <h2 className="studio__step-title">مناسبت، گیرنده و پیام</h2>
               </div>
               <div className="choice-grid" style={{ marginBottom: '1.25rem' }}>
                 {giftOccasions.map((option) => (
@@ -132,109 +131,111 @@ export default function GiftStudio() {
               <div className="form-grid">
                 <div className="field">
                   <label className="field__label" htmlFor="gift-recipient">
-                    Recipient name
+                    نام گیرنده
                   </label>
                   <input
                     id="gift-recipient"
                     className="field__input"
                     value={selection.recipient}
                     onChange={(event) => set('recipient')(event.target.value)}
-                    placeholder="Who is it for?"
+                    placeholder="برای چه کسی است؟"
                     maxLength={40}
                   />
                 </div>
                 <div className="field">
                   <label className="field__label" htmlFor="gift-occasion-read">
-                    Occasion
+                    مناسبت
                   </label>
                   <input id="gift-occasion-read" className="field__input" value={selection.occasion} readOnly />
                 </div>
                 <div className="field form-grid--wide">
                   <label className="field__label" htmlFor="gift-message">
-                    Gift message
+                    پیام هدیه
                   </label>
                   <textarea
                     id="gift-message"
                     className="field__textarea"
                     value={selection.message}
                     onChange={(event) => set('message')(event.target.value)}
-                    placeholder="Your words, written on the card by hand"
+                    placeholder="نوشتهی شما، که با دست روی کارت نوشته میشود"
                     maxLength={200}
                   />
-                  <span className="field__hint">{selection.message.length}/200 characters</span>
+                  <span className="field__hint">
+                    {toPersianDigits(selection.message.length)} از ۲۰۰ نویسه
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="studio__summary">
-            <span className="eyebrow">Your gift</span>
+            <span className="eyebrow">هدیهی شما</span>
             <FramedImage
               image={{ src: '/images/boutique-exterior.jpg', focus: '26% 62%', zoom: 2.6 }}
-              alt="An ANAHITA gift box, tied with ribbon"
+              alt="جعبهی هدیهی آناهیتا، گرهخورده با روبان"
               ratio="frame--wide"
             />
 
             <ul className="summary-list">
               <li>
-                Box size: <span>{size?.label} · {size?.detail}</span>
+                اندازهی جعبه: <span>{size?.label} · {size?.detail}</span>
               </li>
               <li>
-                Chocolates: <span>{assortment?.label}</span>
+                شکلاتها: <span>{assortment?.label}</span>
               </li>
               <li>
-                Ribbon: <span>{ribbon?.label}</span>
+                روبان: <span>{ribbon?.label}</span>
               </li>
               <li>
-                Occasion: <span>{selection.occasion}</span>
+                مناسبت: <span>{selection.occasion}</span>
               </li>
               {selection.recipient.trim() && (
                 <li>
-                  For: <span>{selection.recipient.trim()}</span>
+                  برای: <span>{selection.recipient.trim()}</span>
                 </li>
               )}
               {selection.message.trim() && (
                 <li>
-                  Message: <span>“{selection.message.trim()}”</span>
+                  پیام: <span>«{selection.message.trim()}»</span>
                 </li>
               )}
             </ul>
 
             <div>
               <div className="summary-row">
-                <span>Gift box</span>
+                <span>جعبهی هدیه</span>
                 <span>{formatToman(giftingBasePrice)}</span>
               </div>
               <div className="summary-row">
-                <span>Box size</span>
-                <span>{size?.extra ? `+${formatToman(size.extra)}` : 'Included'}</span>
+                <span>اندازهی جعبه</span>
+                <span>{size?.extra ? `+${formatToman(size.extra)}` : 'شامل'}</span>
               </div>
               <div className="summary-row">
-                <span>Assortment</span>
-                <span>{assortment?.extra ? `+${formatToman(assortment.extra)}` : 'Included'}</span>
+                <span>ترکیب شکلات</span>
+                <span>{assortment?.extra ? `+${formatToman(assortment.extra)}` : 'شامل'}</span>
               </div>
               <div className="summary-row">
-                <span>Ribbon</span>
-                <span>{ribbon?.extra ? `+${formatToman(ribbon.extra)}` : 'Included'}</span>
+                <span>روبان</span>
+                <span>{ribbon?.extra ? `+${formatToman(ribbon.extra)}` : 'شامل'}</span>
               </div>
               <div className="summary-row">
-                <span>Hand-written card</span>
-                <span>Included</span>
+                <span>کارت دستنویس</span>
+                <span>شامل</span>
               </div>
               <div className="summary-row summary-row--total">
-                <span>Total</span>
+                <span>مجموع</span>
                 <span>{formatToman(total)}</span>
               </div>
             </div>
 
             <button type="button" className="btn btn--gold btn--block" onClick={() => addPersonalised(selection)}>
-              Add this gift to the bag
+              افزودن این هدیه به سبد
             </button>
             <p className="form-note" style={{ margin: 0 }}>
-              Assembled in the boutique, usually within a day. If you need it sooner, leave a note at
-              checkout or{' '}
+              در بوتیک و معمولاً تا یک روز آماده میشود. اگر زودتر لازم دارید، در تکمیل سفارش یادداشت
+              بگذارید یا{' '}
               <Link to="/contact" style={{ color: 'var(--gold)' }}>
-                contact us
+                با ما تماس بگیرید
               </Link>
               .
             </p>

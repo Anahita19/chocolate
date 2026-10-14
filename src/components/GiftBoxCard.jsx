@@ -11,12 +11,12 @@ export default function GiftBoxCard({ box, detailed = false }) {
       <div className="pcard__media">
         <FramedImage
           image={box.image}
-          alt={`${box.name} — ANAHITA chocolate gift box`}
+          alt={`${box.name} — جعبهی هدیهی شکلات آناهیتا`}
           ratio="frame--square"
         />
         <div className="pcard__quick">
           <button type="button" className="btn btn--gold btn--block btn--sm" onClick={() => addGiftBox(box)}>
-            Add to bag
+            افزودن به سبد
           </button>
         </div>
       </div>
@@ -28,11 +28,11 @@ export default function GiftBoxCard({ box, detailed = false }) {
         {detailed && <p className="pcard__short">{box.description}</p>}
         <div className="pcard__meta">
           <span className="pcard__price">{formatToman(box.price)}</span>
-          <span className="pcard__weight">Gift box</span>
+          <span className="pcard__weight">جعبه هدیه</span>
         </div>
         {box.studio && (
           <Link to="/personalise" className="pcard__link">
-            Personalise this gift →
+            این هدیه را شخصیسازی کنید ←
           </Link>
         )}
       </div>

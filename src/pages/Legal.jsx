@@ -17,8 +17,8 @@ function LegalPage({ eyebrow, title, intro, children }) {
       <section className="section section--dark" style={{ paddingTop: 'clamp(2rem, 4vw, 3rem)' }}>
         <div className="shell legal">
           <p className="form-status">
-            This page describes how the boutique works today. Details marked as to be confirmed will be
-            filled in before launch.
+            این صفحه توضیح میدهد که بوتیک امروز چگونه کار میکند. جزئیاتی که «بهزودی اعلام میشود»
+            دارند، پیش از افتتاح تکمیل خواهند شد.
           </p>
           {children}
         </div>
@@ -31,50 +31,49 @@ export function ShippingAndReturns() {
   const { boutique } = site;
   return (
     <LegalPage
-      eyebrow="Information"
-      title="Shipping & Returns"
-      intro="How your chocolates travel, and what to do if something is not right when they arrive."
+      eyebrow="اطلاعات"
+      title="ارسال و بازگشت"
+      intro="شکلاتهای شما چگونه سفر میکنند و اگر هنگام رسیدن چیزی درست نبود چه باید کرد."
     >
-      <h2>Delivery</h2>
+      <h2>تحویل</h2>
       <p>
-        Orders are prepared in the boutique and delivered locally or collected in person. Delivery
-        zones, timings and costs are confirmed with you when we review your order — the website does
-        not calculate or charge a delivery fee.
+        سفارشها در بوتیک آماده میشوند و بهصورت محلی تحویل داده میشوند یا حضوری دریافت میگردند.
+        محدودهی ارسال، زمان و هزینه هنگام بررسی سفارش با شما تأیید میشود — سایت هزینهی ارسال را
+        محاسبه یا دریافت نمیکند.
       </p>
       <ul>
-        <li>Local delivery: arranged with you when we confirm the order.</li>
-        <li>Collection in the boutique: free, and always the quickest option.</li>
-        <li>Nationwide courier: quoted per order, with the packaging we use for warm weather.</li>
+        <li>ارسال محلی: هنگام تأیید سفارش با شما هماهنگ میشود.</li>
+        <li>دریافت حضوری از بوتیک: رایگان و همیشه سریعترین راه.</li>
+        <li>پیک سراسری: برای هر سفارش جداگانه اعلام میشود، با بستهبندی مناسب هوای گرم.</li>
       </ul>
 
-      <h2>Chocolate is perishable</h2>
+      <h2>شکلات ماندگاری کوتاه دارد</h2>
       <p>
-        Chocolate dislikes heat and direct sunlight. We pack every order with a cool pack when the
-        weather calls for it, and we will always tell you if a delivery date is risky.
+        شکلات گرما و نور مستقیم آفتاب را دوست ندارد. هر سفارش را در صورت نیاز به همراه سردکن بستهبندی
+        میکنیم و اگر تاریخی پرخطر باشد، همیشه به شما میگوییم.
       </p>
 
-      <h2>If something is wrong</h2>
+      <h2>اگر چیزی درست نبود</h2>
       <p>
-        Please contact us as soon as you can after delivery — ideally within 48 hours — if a box
-        arrives damaged, warm, or does not match your order. Send a photograph if you can; in most
-        cases we replace the box or refund it. Because chocolate is a food item, we cannot accept
-        returns of unsealed boxes for change of mind, but we will always try to make it right.
+        اگر جعبهای آسیبدیده، گرم یا متفاوت با سفارش شما رسید، لطفاً هرچه زودتر پس از تحویل — بهتر است
+        تا ۴۸ ساعت — با ما تماس بگیرید. اگر میتوانید عکس بفرستید؛ در بیشتر موارد جعبه را جایگزین یا
+        مبلغش را بازمیگردانیم. چون شکلات یک مادهی خوراکی است، برای تغییر نظر، بازگشت جعبههای بازشده
+        امکانپذیر نیست، اما همیشه تلاش میکنیم کار را درست کنیم.
       </p>
 
-      <h2>Talk to us</h2>
+      <h2>با ما حرف بزنید</h2>
       <p>
         {boutique.phone || boutique.email ? (
           <>
-            Reach the boutique on {boutique.phone || boutique.email}.
+            با بوتیک از راه {boutique.phone || boutique.email} در تماس باشید.
           </>
         ) : (
           <>
-            The boutique's phone number and email address are to be confirmed; in the meantime, please
-            use the{' '}
+            شمارهی تماس و ایمیل بوتیک بهزودی اعلام میشود؛ در این فاصله لطفاً از{' '}
             <Link to="/contact" style={{ color: 'var(--gold)' }}>
-              contact page
-            </Link>
-            .
+              صفحهی تماس
+            </Link>{' '}
+            استفاده کنید.
           </>
         )}
       </p>
@@ -85,39 +84,40 @@ export function ShippingAndReturns() {
 export function Privacy() {
   return (
     <LegalPage
-      eyebrow="Information"
-      title="Privacy Policy"
-      intro="What we collect when you order or subscribe, why we hold it, and how to have it removed."
+      eyebrow="اطلاعات"
+      title="سیاست حفظ حریم خصوصی"
+      intro="هنگام سفارش یا عضویت چه اطلاعاتی جمع میکنیم، چرا نگه میداریم و چگونه میتوانید حذفش را بخواهید."
     >
-      <h2>What we collect</h2>
+      <h2>چه چیزی جمع میکنیم</h2>
       <ul>
-        <li>Order details: your name, contact details, delivery address and the chocolates requested.</li>
-        <li>Newsletter: the email address you give us, and nothing else.</li>
-        <li>Enquiries: the details you choose to send us about a gifting brief or event.</li>
+        <li>جزئیات سفارش: نام، اطلاعات تماس، نشانی تحویل و شکلاتهای درخواستی شما.</li>
+        <li>خبرنامه: نشانی ایمیلی که به ما میدهید، و هیچ چیز دیگر.</li>
+        <li>استعلامها: اطلاعاتی که خودتان دربارهی یک سفارش هدیه یا رویداد برای ما میفرستید.</li>
       </ul>
 
-      <h2>Where it is held</h2>
+      <h2>کجا نگهداری میشود</h2>
       <p>
-        Right now, order and enquiry details stay in the browser you used — this website's order and
-        email connections are not live yet. Once they are connected, details will be stored by the
-        boutique's own systems and used only to prepare, deliver and support your order. Newsletter
-        addresses will be held by our mailing provider solely to send ANAHITA letters.
+        در حال حاضر، جزئیات سفارش و استعلام فقط در همان مرورگری میماند که استفاده کردهاید — اتصال
+        سفارش و ایمیل این سایت هنوز فعال نشده است. پس از اتصال، اطلاعات در سیستمهای خود بوتیک ذخیره
+        میشود و تنها برای آمادهسازی، ارسال و پشتیبانی سفارش شما به کار میرود. نشانیهای خبرنامه
+        تنها برای فرستادن نامههای آناهیتا نزد سرویسدهندهی پستی ما نگهداری میشود.
       </p>
 
-      <h2>What we never do</h2>
+      <h2>چه کارهایی هرگز نمیکنیم</h2>
       <ul>
-        <li>We do not sell or rent your details.</li>
-        <li>We do not store card details on this website — payment is arranged with the boutique.</li>
+        <li>اطلاعات شما را نمیفروشیم و اجاره نمیدهیم.</li>
+        <li>اطلاعات کارت بانکی را در این سایت ذخیره نمیکنیم — پرداخت با بوتیک هماهنگ میشود.</li>
       </ul>
 
-      <h2>Your choices</h2>
+      <h2>انتخابهای شما</h2>
       <p>
-        Write to us at any time to see, correct or delete what we hold, or to leave the newsletter
-        list. Contact details for privacy requests are to be confirmed; until then please use the{' '}
+        هر زمان بخواهید میتوانید بنویسید تا اطلاعاتی که نگه داشتهایم را ببینید، اصلاح کنید یا حذف
+        کنید، یا از فهرست خبرنامه بیرون بیایید. اطلاعات تماس برای درخواستهای حریم خصوصی بهزودی اعلام
+        میشود؛ تا آن زمان لطفاً از{' '}
         <Link to="/contact" style={{ color: 'var(--gold)' }}>
-          contact page
-        </Link>
-        .
+          صفحهی تماس
+        </Link>{' '}
+        استفاده کنید.
       </p>
     </LegalPage>
   );
@@ -126,49 +126,48 @@ export function Privacy() {
 export function Terms() {
   return (
     <LegalPage
-      eyebrow="Information"
-      title="Terms & Conditions"
-      intro="The practical terms of ordering chocolate from ANAHITA."
+      eyebrow="اطلاعات"
+      title="شرایط و قوانین"
+      intro="شرایط عملی سفارش شکلات از آناهیتا."
     >
-      <h2>Orders</h2>
+      <h2>سفارشها</h2>
       <p>
-        An order placed on this website is a request. It becomes a confirmed order when the boutique
-        accepts it and confirms availability, delivery and payment with you.
+        سفارشی که در این سایت ثبت میشود یک درخواست است. وقتی بوتیک آن را بپذیرد و موجودی، زمان ارسال
+        و پرداخت را با شما تأیید کند، به سفارش قطعی تبدیل میشود.
       </p>
 
-      <h2>Prices</h2>
+      <h2>قیمتها</h2>
       <p>
-        All prices are shown in Iranian toman and include the chocolates only. Delivery costs are
-        confirmed separately with your order. We may change prices and box contents as the range
-        changes.
+        همهی قیمتها به تومان و فقط برای خود شکلاتهاست. هزینهی ارسال جداگانه و همراه سفارش شما تأیید
+        میشود. ممکن است با تغییر مجموعه، قیمتها و محتوای جعبهها را تغییر دهیم.
       </p>
 
-      <h2>Allergens</h2>
+      <h2>آلرژنها</h2>
       <p>
-        Our chocolates are made in a kitchen that handles milk, nuts, gluten-free ingredients and
-        sesame. Ingredient and allergen information for each box is listed on its product page; please
-        read it before ordering if you have an allergy.
+        شکلاتهای ما در آشپزخانهای ساخته میشوند که با شیر، مغزها، مواد بدون گلوتن و کنجد کار میکند.
+        اطلاعات مواد اولیه و آلرژن هر جعبه در صفحهی همان محصول آمده است؛ اگر حساسیت دارید، پیش از
+        سفارش آن را بخوانید.
       </p>
 
-      <h2>Images</h2>
+      <h2>تصاویر</h2>
       <p>
-        Photography on this website shows the boutique and its display cases. Individual pieces are
-        handmade and may vary slightly in decoration from the images shown.
+        تصاویر این سایت بوتیک و ویترینهای آن را نشان میدهند. قطعهها دستسازند و ممکن است تزئینشان
+        کمی با تصاویر تفاوت داشته باشد.
       </p>
 
-      <h2>Using this website</h2>
+      <h2>استفاده از این سایت</h2>
       <p>
-        The ANAHITA name, wordmark and photography belong to the boutique and may not be reused
-        commercially without permission.
+        نام، نشانه و تصاویر آناهیتا متعلق به بوتیک است و بدون اجازه نمیتواند بهصورت تجاری بازاستفاده
+        شود.
       </p>
 
-      <h2>Questions</h2>
+      <h2>پرسشها</h2>
       <p>
-        Anything unclear? Please{' '}
+        چیزی روشن نیست؟ لطفاً{' '}
         <Link to="/contact" style={{ color: 'var(--gold)' }}>
-          contact the boutique
+          با بوتیک تماس بگیرید
         </Link>{' '}
-        and we will explain in plain language.
+        تا با زبان ساده توضیح بدهیم.
       </p>
     </LegalPage>
   );

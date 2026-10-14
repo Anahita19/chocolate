@@ -1,0 +1,26 @@
+/* ---------------------------------------------------------------------------
+   Persian / right-to-left corrections.
+   The document is Persian and RTL (see index.html); the rest of the stylesheet
+   was written for Latin type in a left-to-right flow, so the few things that
+   do not mirror on their own are corrected here.
+   --------------------------------------------------------------------------- */
+
+/* Letter-spacing is a Latin display convention: in Arabic script it breaks the
+   joins between letters, so it is switched off everywhere except the Latin
+   ANAHITA lockup, which is spaced out on purpose. */
+[dir='rtl'] *:not(.brand__word):not(.brand__descriptor) {
+  letter-spacing: normal;
+}
+
+/* The nav underline grows from the reading edge. */
+[dir='rtl'] .nav__link::after {
+  left: auto;
+  right: 0;
+  transform-origin: right;
+}
+
+/* Blocks that were pinned to the left. */
+[dir='rtl'] .choice,
+[dir='rtl'] .accordion__trigger {
+  text-align: right;
+}

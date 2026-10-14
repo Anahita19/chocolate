@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../lib/cart.jsx';
-import { formatToman } from '../lib/format.js';
+import { formatToman, toPersianDigits } from '../lib/format.js';
 import { CloseIcon, MinusIcon, PlusIcon, TrashIcon } from './Icons.jsx';
 
 export default function CartDrawer() {
@@ -41,12 +41,12 @@ export default function CartDrawer() {
         className="drawer__panel"
         role="dialog"
         aria-modal="true"
-        aria-label="Shopping bag"
+        aria-label="سبد خرید"
         tabIndex={-1}
       >
         <header className="drawer__head">
-          <span className="drawer__title">Your bag ({count})</span>
-          <button type="button" className="icon-btn" onClick={closeCart} aria-label="Close bag">
+          <span className="drawer__title">سبد شما ({toPersianDigits(count)})</span>
+          <button type="button" className="icon-btn" onClick={closeCart} aria-label="بستن سبد">
             <CloseIcon />
           </button>
         </header>
@@ -54,9 +54,9 @@ export default function CartDrawer() {
         <div className="drawer__body">
           {items.length === 0 ? (
             <div className="empty-state">
-              <p style={{ margin: 0 }}>Your bag is empty.</p>
+              <p style={{ margin: 0 }}>سبد شما خالی است.</p>
               <Link to="/chocolates" className="btn" onClick={closeCart}>
-                Browse the chocolate case
+                دیدن ویترین شکلاتها
               </Link>
             </div>
           ) : (
@@ -85,7 +85,7 @@ export default function CartDrawer() {
                   <p className="line-item__meta">{item.weight}</p>
                   {item.selection?.message && (
                     <p className="line-item__meta" style={{ textTransform: 'none', letterSpacing: 0 }}>
-                      “{item.selection.message}”
+                      «{item.selection.message}»
                     </p>
                   )}
                   <div className="line-item__row">
@@ -93,17 +93,17 @@ export default function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => setQty(item.key, item.qty - 1)}
-                        aria-label={`Decrease quantity of ${item.name}`}
+                        aria-label={`کم کردن تعداد ${item.name}`}
                       >
                         <MinusIcon width={14} height={14} />
                       </button>
                       <span className="stepper__value" aria-live="polite">
-                        {item.qty}
+                        {toPersianDigits(item.qty)}
                       </span>
                       <button
                         type="button"
                         onClick={() => setQty(item.key, item.qty + 1)}
-                        aria-label={`Increase quantity of ${item.name}`}
+                        aria-label={`افزودن تعداد ${item.name}`}
                       >
                         <PlusIcon width={14} height={14} />
                       </button>
@@ -116,7 +116,7 @@ export default function CartDrawer() {
                     onClick={() => removeItem(item.key)}
                     style={{ marginTop: '0.6rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
                   >
-                    <TrashIcon width={14} height={14} /> Remove
+                    <TrashIcon width={14} height={14} /> حذف
                   </button>
                 </div>
               </article>
@@ -132,18 +132,18 @@ export default function CartDrawer() {
               </div>
               <span>
                 {giftUnlocked
-                  ? 'Your complimentary gold-foil gift bag is included.'
-                  : `Add ${formatToman(remainingForGift)} more to receive a complimentary gold-foil gift bag.`}
+                  ? 'کیسهی هدیهی رایگان فویل طلایی برای شما در نظر گرفته شد.'
+                  : `${formatToman(remainingForGift)} دیگر اضافه کنید تا کیسهی هدیهی فویل طلایی رایگان بگیرید.`}
               </span>
             </div>
           )}
 
           <div className="summary-row">
-            <span>Subtotal</span>
+            <span>جمع جزء</span>
             <span>{formatToman(subtotal)}</span>
           </div>
           <p className="form-note" style={{ margin: 0 }}>
-            Delivery is arranged with the boutique after your order request is reviewed.
+            زمان و هزینهی ارسال پس از بررسی سفارش، با شما هماهنگ میشود.
           </p>
           <Link
             to="/checkout"
@@ -152,10 +152,10 @@ export default function CartDrawer() {
             aria-disabled={items.length === 0}
             style={items.length === 0 ? { pointerEvents: 'none', opacity: 0.45 } : undefined}
           >
-            Proceed to checkout
+            تکمیل سفارش
           </Link>
           <Link to="/personalise" className="link-arrow" onClick={closeCart} style={{ justifyContent: 'center' }}>
-            Add a personalised gift
+            افزودن یک هدیهی شخصیسازیشده
           </Link>
         </footer>
       </aside>

@@ -11,7 +11,7 @@ export default function Newsletter() {
     event.preventDefault();
     const value = email.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
-      setError('Please enter a valid email address.');
+      setError('لطفاً یک نشانی ایمیل معتبر وارد کنید.');
       return;
     }
     setError('');
@@ -24,12 +24,12 @@ export default function Newsletter() {
   return (
     <div className="newsletter">
       <div>
-        <span className="eyebrow">Newsletter</span>
+        <span className="eyebrow">خبرنامه</span>
         <h2 style={{ color: 'var(--ivory)', maxWidth: '20ch' }}>
-          A Little More Chocolate in Your World
+          کمی شکلات بیشتر در دنیای شما
         </h2>
         <p className="lede" style={{ marginTop: '1rem' }}>
-          Discover our latest collections, thoughtful gifting ideas, and new creations from ANAHITA.
+          تازهترین مجموعهها، ایدههای هدیه و ساختههای جدید آناهیتا را ببینید.
         </p>
       </div>
 
@@ -37,7 +37,7 @@ export default function Newsletter() {
         <form className="newsletter__form" onSubmit={onSubmit} noValidate>
           <div className={`field ${error ? 'field--invalid' : ''}`}>
             <label className="field__label" htmlFor="newsletter-email">
-              Email address
+              نشانی ایمیل
             </label>
             <input
               id="newsletter-email"
@@ -57,26 +57,26 @@ export default function Newsletter() {
             )}
           </div>
           <button type="submit" className="btn btn--gold" disabled={status === 'sending'}>
-            {status === 'sending' ? 'Sending…' : 'Subscribe'}
+            {status === 'sending' ? 'در حال ارسال…' : 'عضویت'}
           </button>
         </form>
 
         {status === 'delivered' && (
           <p className="form-status" style={{ marginTop: '1rem' }} role="status">
             <CheckIcon style={{ color: 'var(--gold)', marginTop: 3, flex: 'none' }} />
-            Thank you — your address is on the ANAHITA list.
+            سپاس — نشانی شما در فهرست آناهیتا ثبت شد.
           </p>
         )}
         {status === 'held' && (
           <p className="form-status" style={{ marginTop: '1rem' }} role="status">
             <CheckIcon style={{ color: 'var(--gold)', marginTop: 3, flex: 'none' }} />
-            Thank you. Newsletter delivery is not connected yet, so your address has only been noted
-            on this device — we will write as soon as our mailing list goes live.
+            سپاس. ارسال خبرنامه هنوز متصل نیست، بنابراین نشانی شما فقط روی همین دستگاه ثبت شده است —
+            بهمحض راهاندازی فهرست پستی برایتان مینویسیم.
           </p>
         )}
 
         <p className="form-note" style={{ marginTop: '1rem' }}>
-          We only use your address to send ANAHITA letters. Unsubscribe at any time.
+          از نشانی شما فقط برای فرستادن نامههای آناهیتا استفاده میکنیم. هر زمان بخواهید میتوانید لغو کنید.
         </p>
       </div>
     </div>

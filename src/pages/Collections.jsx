@@ -4,17 +4,18 @@ import ProductCard from '../components/ProductCard.jsx';
 import GiftBoxCard from '../components/GiftBoxCard.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { collections, giftBoxes, products } from '../data/products.js';
+import { toPersianDigits } from '../lib/format.js';
 
 export default function Collections() {
   return (
     <>
       <section className="page-hero">
         <div className="shell">
-          <span className="eyebrow">Curated in the boutique</span>
-          <h1>Collections</h1>
+          <span className="eyebrow">دستچینشده در بوتیک</span>
+          <h1>مجموعهها</h1>
           <p className="lede" style={{ marginTop: '1.1rem' }}>
-            The case is arranged in groups, so a box can be built around one idea: our signature
-            pieces, dark and intense, nuts and pistachio, or gifting.
+            ویترین در گروههایی چیده شده تا هر جعبه حول یک ایده ساخته شود: قطعههای امضای ما، تلخ و
+            پرقدرت، مغزها و پسته، یا هدیه.
           </p>
         </div>
       </section>
@@ -31,7 +32,9 @@ export default function Collections() {
                 <FramedImage image={collection.image} alt={collection.title} ratio="frame--wide" />
               </Reveal>
               <Reveal delay={100}>
-                <span className="eyebrow">Collection {String(index + 1).padStart(2, '0')}</span>
+                <span className="eyebrow">
+                  مجموعه {toPersianDigits(String(index + 1).padStart(2, '0'))}
+                </span>
                 <h2>{collection.title}</h2>
                 <p className="lede" style={{ marginTop: '1rem' }}>
                   {collection.copy}
@@ -41,7 +44,7 @@ export default function Collections() {
                   className="link-arrow"
                   style={{ marginTop: '1.5rem' }}
                 >
-                  {collection.gift ? 'Explore gift boxes' : 'Browse the chocolate case'} →
+                  {collection.gift ? 'دیدن جعبههای هدیه ←' : 'دیدن ویترین شکلاتها ←'}
                 </Link>
               </Reveal>
             </div>

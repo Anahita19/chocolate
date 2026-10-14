@@ -9,11 +9,11 @@ export default function OurStory() {
     <>
       <section className="page-hero">
         <div className="shell">
-          <span className="eyebrow">Our story</span>
-          <h1 style={{ maxWidth: '24ch' }}>A chocolate house built on a small glass case</h1>
+          <span className="eyebrow">داستان ما</span>
+          <h1 style={{ maxWidth: '24ch' }}>خانهای شکلاتی که بر پایهی یک ویترین کوچک شیشهای ساخته شد</h1>
           <p className="lede" style={{ marginTop: '1.1rem' }}>
-            ANAHITA began with a simple ambition: to make chocolate that deserves the room it is served
-            in — and to serve it in a room that deserves the chocolate.
+            آناهیتا با یک آرزوی ساده آغاز شد: ساختن شکلاتی که شایستهی اتاقی باشد که در آن سرو میشود —
+            و سرو کردنش در اتاقی که شایستهی آن شکلات باشد.
           </p>
         </div>
       </section>
@@ -21,22 +21,22 @@ export default function OurStory() {
       <section className="section section--dark">
         <div className="shell split-story">
           <Reveal>
-            <span className="eyebrow">The idea</span>
-            <h2 style={{ maxWidth: '22ch' }}>Everything points at the counter</h2>
+            <span className="eyebrow">ایده</span>
+            <h2 style={{ maxWidth: '22ch' }}>همهچیز به سمت میز اشاره میکند</h2>
             <p className="lede" style={{ marginTop: '1.1rem' }}>
-              Walk in and the room arranges itself around one thing: a curved glass case, lit from
-              below, filled with handmade chocolate. Dark walnut panels absorb the light, the marble
-              wall carries the wordmark, and the arched alcoves hold the gift boxes.
+              وارد میشوید و اتاق خود را حول یک چیز میچیند: یک ویترین شیشهای منحنی، روشنشده از
+              پایین، پر از شکلات دستساز. پانلهای چوب گردو نور را میبلعند، دیوار سنگی نشانهی برند را
+              نگه میدارد و طاقچههای هلالی جعبههای هدیه را در خود جای میدهند.
             </p>
             <p className="lede">
-              It is a deliberately quiet design. Chocolate is the brightest thing in the room, and we
-              would rather it stayed that way.
+              این طراحی عمداً آرام است. شکلات روشنترین چیز این اتاق است و ما ترجیح میدهیم همینطور
+              بماند.
             </p>
           </Reveal>
           <Reveal delay={120}>
             <FramedImage
               image={{ src: '/images/boutique-interior.jpg', focus: '50% 50%', zoom: 1.05 }}
-              alt="Wide view of the ANAHITA boutique interior with dark walnut cabinetry and the curved chocolate counter"
+              alt="نمای کلی از داخل بوتیک آناهیتا با کابینتهای چوب گردوی تیره و میز منحنی شکلات"
               ratio="frame--portrait"
             />
           </Reveal>
@@ -65,22 +65,22 @@ export default function OurStory() {
       <section className="section section--espresso">
         <div className="shell" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', textAlign: 'center' }}>
           <Emblem className="brand__emblem" style={{ width: 44, height: 26 }} />
-          <h2 style={{ maxWidth: '28ch' }}>Made in small batches, chosen one piece at a time</h2>
+          <h2 style={{ maxWidth: '28ch' }}>در دستههای کوچک ساخته میشود، دانهدانه انتخاب میشود</h2>
           <p className="lede" style={{ maxWidth: '54ch' }}>
-            Come and taste at the counter, or build a box from wherever you are. Either way, it is
-            packed the day it leaves us.
+            بیایید و پشت میز بچشید، یا از هر جا که هستید جعبهتان را بچینید. در هر حال، همان روزی که
+            از ما خارج میشود بستهبندی میشود.
           </p>
           <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link to="/boutique" className="btn btn--gold">
-              Visit our boutique
+              دیدن بوتیک
             </Link>
             <Link to="/chocolates" className="btn">
-              Explore our chocolates
+              دیدن شکلاتها
             </Link>
           </div>
           <p className="form-note">
             {site.boutique.addressLines.length === 0
-              ? 'Boutique address, hours and phone number will be published here once confirmed.'
+              ? 'نشانی بوتیک، ساعات کاری و شمارهی تماس پس از تأیید همینجا منتشر میشود.'
               : null}
           </p>
         </div>

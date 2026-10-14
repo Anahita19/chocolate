@@ -41,8 +41,8 @@ export default function Boutique() {
         <div className="shell boutique-info">
           <div className="info-block">
             <span className="info-block__heading">
-              <PinIcon width={15} height={15} style={{ verticalAlign: '-2px', marginRight: 8 }} />
-              Address
+              <PinIcon width={15} height={15} style={{ verticalAlign: '-2px', marginInlineEnd: 8 }} />
+              نشانی
             </span>
             {hasAddress ? (
               <ul>
@@ -52,20 +52,20 @@ export default function Boutique() {
               </ul>
             ) : (
               <p className="to-be-confirmed" style={{ margin: 0 }}>
-                The boutique address has not been published yet.
+                نشانی بوتیک هنوز منتشر نشده است.
               </p>
             )}
             {boutique.mapUrl ? (
               <a className="link-arrow" href={boutique.mapUrl} target="_blank" rel="noreferrer noopener" style={{ marginTop: '1rem' }}>
-                Open in maps →
+                دیدن روی نقشه ←
               </a>
             ) : null}
           </div>
 
           <div className="info-block">
             <span className="info-block__heading">
-              <ClockIcon width={15} height={15} style={{ verticalAlign: '-2px', marginRight: 8 }} />
-              Opening hours
+              <ClockIcon width={15} height={15} style={{ verticalAlign: '-2px', marginInlineEnd: 8 }} />
+              ساعات کاری
             </span>
             {boutique.hours.length > 0 ? (
               <ul>
@@ -77,13 +77,13 @@ export default function Boutique() {
               </ul>
             ) : (
               <p className="to-be-confirmed" style={{ margin: 0 }}>
-                Opening hours have not been published yet.
+                ساعات کاری هنوز منتشر نشده است.
               </p>
             )}
           </div>
 
           <div className="info-block">
-            <span className="info-block__heading">Talk to us</span>
+            <span className="info-block__heading">با ما حرف بزنید</span>
             <ul>
               <li>
                 {boutique.phone ? (
@@ -92,8 +92,8 @@ export default function Boutique() {
                   </a>
                 ) : (
                   <span className="to-be-confirmed">
-                    <PhoneIcon width={15} height={15} style={{ verticalAlign: '-2px', marginRight: 8 }} />
-                    Phone number to be confirmed
+                    <PhoneIcon width={15} height={15} style={{ verticalAlign: '-2px', marginInlineEnd: 8 }} />
+                    شمارهی تماس بهزودی اعلام میشود
                   </span>
                 )}
               </li>
@@ -104,8 +104,8 @@ export default function Boutique() {
                   </a>
                 ) : (
                   <span className="to-be-confirmed">
-                    <MailIcon width={15} height={15} style={{ verticalAlign: '-2px', marginRight: 8 }} />
-                    Email address to be confirmed
+                    <MailIcon width={15} height={15} style={{ verticalAlign: '-2px', marginInlineEnd: 8 }} />
+                    نشانی ایمیل بهزودی اعلام میشود
                   </span>
                 )}
               </li>
@@ -116,8 +116,8 @@ export default function Boutique() {
                   </a>
                 ) : (
                   <span className="to-be-confirmed">
-                    <InstagramIcon width={15} height={15} style={{ verticalAlign: '-2px', marginRight: 8 }} />
-                    Instagram link to be added
+                    <InstagramIcon width={15} height={15} style={{ verticalAlign: '-2px', marginInlineEnd: 8 }} />
+                    لینک اینستاگرام بهزودی اضافه میشود
                   </span>
                 )}
               </li>
@@ -129,21 +129,20 @@ export default function Boutique() {
       <section className="section section--marble">
         <div className="shell split-story">
           <Reveal>
-            <span className="eyebrow">At the counter</span>
-            <h2 style={{ maxWidth: '22ch' }}>How a visit works</h2>
+            <span className="eyebrow">پشت میز</span>
+            <h2 style={{ maxWidth: '22ch' }}>یک بازدید چگونه میگذرد</h2>
             <ul className="numbered-notes" style={{ marginTop: '1.5rem' }}>
-              <li>Choose a box, or start with a single piece to taste in the shop.</li>
-              <li>We lift the chocolates from the case with a small fork and lay them on ivory.</li>
+              <li>یک جعبه انتخاب کنید، یا با یک قطعهی تنها برای چشیدن در مغازه شروع کنید.</li>
+              <li>شکلاتها را با یک چنگال کوچک از ویترین برمیداریم و روی جای عاجیرنگ میچینیم.</li>
               <li>
-                Tell us the occasion; we will suggest an order — light and creamy first, dark and
-                intense last.
+                مناسبت را بگویید؛ ترتیب را پیشنهاد میدهیم — سبک و خامهای اول، تلخ و پرقدرت آخر.
               </li>
-              <li>The ribbon is tied while you wait, with your message card inside.</li>
+              <li>روبان همانجا که منتظرید گره میخورد، با کارت پیام شما در داخل.</li>
             </ul>
           </Reveal>
           <Reveal delay={120}>
-            <span className="eyebrow">Services</span>
-            <h2 style={{ maxWidth: '22ch' }}>What we can arrange</h2>
+            <span className="eyebrow">خدمات</span>
+            <h2 style={{ maxWidth: '22ch' }}>چه چیزهایی را ترتیب میدهیم</h2>
             <ul className="numbered-notes" style={{ marginTop: '1.5rem' }}>
               {boutique.services.map((service) => (
                 <li key={service}>{service}</li>
@@ -151,10 +150,10 @@ export default function Boutique() {
             </ul>
             <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', marginTop: '1.75rem' }}>
               <Link to="/contact" className="btn btn--gold">
-                Contact the boutique
+                تماس با بوتیک
               </Link>
               <Link to="/gift-boxes" className="btn">
-                Explore gift boxes
+                دیدن جعبههای هدیه
               </Link>
             </div>
           </Reveal>
