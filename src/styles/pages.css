@@ -4,16 +4,25 @@
    --------------------------------------------------------------------------- */
 
 /* --- entrance hero ------------------------------------------------------- */
-/* One viewport of the boutique photograph (Hero.jsx), with the wordmark and the
-   controls over it. Nothing is pinned: the hero releases straight into the next
-   section. */
+/* The scroll-scrubbed film of the boutique (Hero.jsx). `.chero` is
+   `--chero-scroll` tall and `.chero__sticky` pins one viewport of it, so the
+   visitor's scroll position walks the timeline from the first frame to the last.
+   Without a film — reduced motion, or a video that never loads — the section is
+   a single viewport of the still photograph instead. */
 .chero {
   position: relative;
+  height: 100svh;
   background: var(--basalt);
 }
 
+.chero--film {
+  --chero-scroll: 300vh;
+  height: var(--chero-scroll);
+}
+
 .chero__sticky {
-  position: relative;
+  position: sticky;
+  top: 0;
   width: 100%;
   height: 100svh;
   overflow: hidden;
@@ -29,6 +38,74 @@
   /* The interior is portrait: on a wide viewport the crop keeps the counter and
      the chocolates, rather than the ceiling or the floor. */
   object-position: 52% 46%;
+}
+
+/* The film rides over the photograph at its own 480×864 aspect: `cover` crops it
+   to the viewport, it is never stretched. It stays invisible until the browser
+   has actually painted a frame, and the photograph shows through until then. */
+.chero__film {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease);
+}
+
+.chero__film[data-state='ready'] {
+  opacity: 1;
+}
+
+/* The loading treatment: a champagne hairline over the boutique photograph, not
+   a spinner and not a blank rectangle. */
+.chero__loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  text-align: center;
+}
+
+.chero__loading-bar {
+  position: relative;
+  display: block;
+  width: clamp(140px, 24vw, 240px);
+  height: 1px;
+  background: rgba(20, 14, 11, 0.55);
+  overflow: hidden;
+}
+
+.chero__loading-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 38%;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  animation: chero-sheen 1.7s var(--ease) infinite;
+}
+
+@keyframes chero-sheen {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(360%);
+  }
+}
+
+.chero__loading-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  text-shadow: 0 2px 12px rgba(15, 10, 8, 0.9);
 }
 
 /* A scrim, not a blackout: the photograph stays the dominant element, the top of

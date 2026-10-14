@@ -47,8 +47,9 @@ if `anahita-website-design` is ever merged properly.
 | Gift atelier options and price additions | `src/data/gifting.js` |
 | Colours, type, spacing tokens | `src/styles/tokens.css` |
 | Newsletter / enquiry / order / payment integration seam | `src/lib/integrations.js` |
-| The entrance hero (boutique photograph, wordmark, controls) | `src/components/Hero.jsx` |
+| The entrance hero (film, wordmark, controls, scroll logic) | `src/components/Hero.jsx` |
 | The hero photograph, and every other boutique framing | `public/images/` |
+| The hero film, served untouched | `public/videos/anahita-hero.mp4` |
 
 **Boutique details are deliberately empty** (`addressLines`, `hours`, `phone`, `email`,
 `instagramUrl`). The UI renders an elegant "to be confirmed" state instead of inventing
@@ -76,15 +77,34 @@ on top of `object-fit: cover` (see `src/components/FramedImage.jsx`).
 - Fonts are self-hosted variable WOFF2 files in `public/fonts/` (Cormorant Garamond,
   Montserrat) declared in `src/styles/fonts.css`; the app renders identically offline.
 
-## The entrance hero
+## The entrance hero (scroll-scrubbed film)
 
-- `src/components/Hero.jsx` renders one viewport of `public/images/boutique-interior.jpg`
-  with the wordmark, the tagline and the two controls over it (the `.chero` block in
-  `src/styles/pages.css`). Nothing is pinned and nothing is loaded: the section releases
-  straight into the next one.
-- The boutique's scroll-scrubbed film was **removed on request**. The clip, the `<video>`,
-  the seek/scroll logic, the scroll cue and the loading state are all gone, and
-  `public/videos/` no longer exists — putting a film back means restoring all of that.
+- `src/components/Hero.jsx` renders `public/videos/anahita-hero.mp4` — the boutique
+  walk-in — pinned in a `position: sticky` viewport inside a `--chero-scroll` (300vh)
+  section (`.chero--film` in `src/styles/pages.css`). The visitor's scroll position drives
+  `video.currentTime`: the clip is never played (`play()` is never called), never loops and
+  never autoplays.
+- The maths: a passive `scroll` listener only stores the target progress in a ref, and one
+  `requestAnimationFrame` loop eases `shownRef` toward it (30 % of the gap per frame, then
+  a snap) and writes `currentTime` — a seek is only issued when the drift is over half a
+  frame **and** the previous seek has landed (with a 400 ms watchdog). React never renders
+  on scroll. `travel` is `section height − stage height`, which is exactly the browser's
+  own sticky release point, so progress 1 and the final frame coincide with the release.
+- The still photograph stays underneath the film the whole time, so nothing is ever black
+  while it loads; the film fades in only once a frame has been painted. The scrim and the
+  hero copy ease away over the first third of the timeline (the copy is also
+  `visibility: hidden` then, so it leaves the tab order).
+- `prefers-reduced-motion: reduce` renders the photograph only, one viewport tall; a video
+  error or one that never becomes ready within 15 s falls back to the same thing. Both keep
+  the section at `100svh` with no dead scroll.
+- The master is the client's original export and is served byte-for-byte (2.87 MB,
+  **480×864 portrait, 24 fps, H.264, with an AAC track**). Do **not** re-encode, resize or
+  "optimise" it — that is an explicit client requirement. Two consequences worth telling
+  them about rather than fixing quietly: on a wide desktop viewport `object-fit: cover`
+  upscales the portrait frame ~3× and crops it to a centre band, and seeking resolves
+  against whatever keyframes the export has. A landscape master (H.264, frequent
+  keyframes) is the fix for both; swap the file and nothing else needs to change.
+- Scroll length is one number to taste: `--chero-scroll` in `src/styles/pages.css`.
 
 ## Language and direction (Persian, RTL)
 
@@ -132,7 +152,10 @@ drawer, use the gift atelier (`/personalise`, totals should change with each cho
 place a test order through `/checkout` — it must land on `/order-confirmation` with a
 reference and the bag emptied. Leave no test records in the cart afterwards.
 
-The hero is a plain full-viewport photograph now: check the homepage renders it, that the
-document contains no `<video>` element and makes no request under `/videos/`, and that the
-next section starts immediately after the hero (the hero's bottom edge equals the next
-section's top edge).
+The hero is the scroll-scrubbed film: check the homepage shows a `<video>` for
+`/videos/anahita-hero.mp4` at `data-state="ready"`, that it is `paused` and not `loop`ed at
+every point, and that scrolling moves `currentTime` (it must read 0 at the top of the page,
+`duration − 0.001` once `scrollY` reaches `section height − stage height`, and move back
+again when you scroll up). While the sticky viewport is pinned the stage's `top` must stay
+at 0. Also confirm `public/videos/anahita-hero.mp4` still matches the client's master
+(`md5sum`), and that the next section starts at the hero's bottom edge with no gap.
